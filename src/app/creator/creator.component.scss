@@ -1,0 +1,39 @@
+@mixin common(){
+  display: block;
+  border: 0;
+  margin-top: 30px;
+  width:100%;
+  overflow: hidden;
+  &:focus {
+    outline: none;
+  }
+}
+
+.body {
+  width: 100%;
+}
+
+.container {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.title {
+  @include common();
+  letter-spacing: 5px;
+  text-align: center;
+  font-size: 40px;
+  color:#383636;
+  height: 45px;
+}
+
+.content {
+  @include common();
+  font-size: 30px;
+  color:gray;
+}
+
+::-webkit-input-placeholder {
+  color:#ABA7AD;
+}
+

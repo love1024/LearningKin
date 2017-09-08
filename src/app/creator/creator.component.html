@@ -1,0 +1,12 @@
+<div class="body">
+  <div class="container">
+    <textarea #titleText
+      class="title"
+      placeholder="This is Title Blog"
+      (input)="autoGrow(titleText)"></textarea>
+    <textarea #contentText
+      class="content"
+      placeholder="Write Your Blog Content Here"
+      (input)="autoGrow(contentText)"></textarea>
+  </div>
+</div>
