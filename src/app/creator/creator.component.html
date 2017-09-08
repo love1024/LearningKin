@@ -2,11 +2,10 @@
   <div class="container">
     <textarea #titleText
       class="title"
-      placeholder="This is Title Blog"
+      placeholder="This is Blog Title..."
       (input)="autoGrow(titleText)"></textarea>
-    <textarea #contentText
-      class="content"
-      placeholder="Write Your Blog Content Here"
-      (input)="autoGrow(contentText)"></textarea>
+    <div class="content"
+      contenteditable="true"
+      placeholder="This is Blog Content..."></div>
   </div>
 </div>

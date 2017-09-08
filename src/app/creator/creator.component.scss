@@ -1,7 +1,6 @@
 @mixin common(){
   display: block;
   border: 0;
-  margin-top: 30px;
   width:100%;
   overflow: hidden;
   &:focus {
@@ -25,15 +24,27 @@
   font-size: 40px;
   color:#383636;
   height: 45px;
+  margin-top: 30px;
+  margin-bottom:30px;
 }
 
 .content {
   @include common();
   font-size: 30px;
   color:gray;
+  cursor: text;
+  word-wrap: break-word;
 }
 
+//To color the placeholder
 ::-webkit-input-placeholder {
+  color:#ABA7AD;
+}
+
+//contentEditable div placehodler
+[contenteditable=true]:empty:before {
+  content: attr(placeholder);
+  display: block; /* For Firefox */
   color:#ABA7AD;
 }
 
