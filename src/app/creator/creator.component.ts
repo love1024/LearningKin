@@ -23,4 +23,16 @@ export class CreatorComponent implements OnInit {
     }
   }
 
+  makeBold() {
+    document.execCommand('bold', false, null);
+  }
+
+  makeItalic() {
+    document.execCommand('italic', false, null);
+  }
+
+  makeUnderline() {
+    document.execCommand('underline', false, null);
+  }
+
 }

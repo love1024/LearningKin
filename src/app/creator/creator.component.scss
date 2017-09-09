@@ -36,6 +36,25 @@
   word-wrap: break-word;
 }
 
+.toolbar {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  background-color: #CAC7C7;
+  bottom: 0;
+  text-align: center;
+  border-top: 3px solid lightgray;
+}
+
+.fa {
+  padding: 10px;
+  color:white;
+
+  &:hover {
+    color:#46B5E5;
+  }
+}
+
 //To color the placeholder
 ::-webkit-input-placeholder {
   color:#ABA7AD;
