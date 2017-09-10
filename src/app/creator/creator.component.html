@@ -1,5 +1,6 @@
 <div class="body">
-  <div class="container">
+  <div #content
+    class="container">
     <textarea #titleText
       class="title"
       placeholder="This is Blog Title..."
@@ -8,18 +9,24 @@
       contenteditable="true"
       placeholder="This is Blog Content..."></div>
   </div>
+  <div class="fakeBox"></div>
 </div>
 <div class="toolbar">
   <a href="#"
-    (click)="makeBold()"><i class="fa fa-bold"
+    (click)="formatText('bold')"><i class="fa fa-bold"
     aria-hidden="true"></i></a>
 
   <a href="#"
-    (click)="makeItalic()"><i class="fa fa-italic"
+    (click)="formatText('italic')"><i class="fa fa-italic"
     aria-hidden="true"></i></a>
 
   <a href="#"
-    (click)="makeUnderline()">
+    (click)="formatText('underline')">
      <i class="fa fa-underline"
     aria-hidden="true"></i> </a>
+
+  <a href="#"
+    (click)="insertImage()">
+  <i class="fa fa-picture-o"
+   aria-hidden="true"></i></a>
 </div>

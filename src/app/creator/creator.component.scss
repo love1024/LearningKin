@@ -22,6 +22,7 @@
   letter-spacing: 5px;
   text-align: center;
   font-size: 40px;
+  font-weight: bold;
   color:#383636;
   height: 45px;
   margin-top: 30px;
@@ -46,6 +47,11 @@
   border-top: 3px solid lightgray;
 }
 
+.image {
+  width: 100%;
+  margin: 20px 0 20px 0;
+}
+
 .fa {
   padding: 10px;
   color:white;
@@ -65,5 +71,11 @@
   content: attr(placeholder);
   display: block; /* For Firefox */
   color:#ABA7AD;
+}
+
+//Fake Height to add at below of content area
+.fakeBox {
+  height: 500px;
+  width:100%;
 }
 
