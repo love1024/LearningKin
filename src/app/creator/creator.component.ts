@@ -30,22 +30,72 @@ export class CreatorComponent implements OnInit {
   formatText(cmd: string) {
     document.execCommand(cmd, false, null);
   }
-  // https://scontent.fdel3-1.fna.fbcdn.net/v/t1.0-9/1230002_1391455327751947_73356302_n.jpg?oh=0867b698933ca57f49283d09a2140e42&oe=5A4D1E2A
-  insertImage() {
 
-    // Insert new Image Element using renderer2
+  // Insert new Image Element using renderer2
+  insertImage() {
     const link = window.prompt('Insert link of the image');
-    const el = this._renderer.createElement('img');
-    this._renderer.addClass(el, 'image');
+
+    const div = this._renderer.createElement('div');
+    this._renderer.addClass(div, 'imageContainer');
+    const img = this.createImageElement(link);
+    const del = this.createDeleteElement();
+    this._renderer.appendChild(div, del);
+    this._renderer.appendChild(div, img);
+
+    this._renderer.appendChild(this.content.nativeElement, div);
+
+    this.deleteEmptyContent();
+    this.addNextEditableBox();
+  }
+
+  // Insert new Video Element using renderer2
+  insertVideo() {
+    const link = window.prompt('Insert link of the video');
+    const el = this._renderer.createElement('video');
+    this._renderer.addClass(el, 'video');
     this._renderer.setAttribute(el, 'src', link);
     this._renderer.appendChild(this.content.nativeElement, el);
+  }
 
-    // Insert next editable box to add more content
+  // Insert next editable box to add more content
+  addNextEditableBox() {
     const el1 = this._renderer.createElement('div');
     this._renderer.addClass(el1, 'content');
     this._renderer.setAttribute(el1, 'contentEditable', 'true');
-    this._renderer.setAttribute(el1, 'placeholder', 'Add Extra Content...');
+    //   this._renderer.setAttribute(el1, 'placeholder', 'Add Extra Content...');
     this._renderer.appendChild(this.content.nativeElement, el1);
   }
 
+  // To delete not used placeholders
+  deleteEmptyContent() {
+    const children = this.content.nativeElement.children;
+    for (let i = 2; i < children.length; i++) {
+      if (children[i].innerHTML === '' && children[i].tagName !== 'IMG') {
+        this.content.nativeElement.removeChild(children[i]);
+      }
+    }
+  }
+
+  // Create Image element
+  createImageElement(link: string) {
+    const el = this._renderer.createElement('img');
+    this._renderer.addClass(el, 'image');
+    this._renderer.setAttribute(el, 'src', link);
+    return el;
+  }
+
+  // Create Delete Image
+  createDeleteElement() {
+    const el = this._renderer.createElement('i');
+    this._renderer.addClass(el, 'fa');
+    this._renderer.addClass(el, 'fa-window-close');
+    this._renderer.setAttribute(el, 'aria-hidden', 'true');
+
+    // Remove the parent on click of this element
+    this._renderer.listen(el, 'click', (e) => {
+      const parent = this._renderer.parentNode(e.srcElement);
+      this._renderer.removeChild(this.content.nativeElement, parent);
+    });
+    return el;
+  }
 }
