@@ -18,6 +18,10 @@
   margin: 0 auto;
 }
 
+/**
+  --------------TITLE AND CONTENT----------------
+**/
+
 .title {
   @include common();
   letter-spacing: 5px;
@@ -32,13 +36,44 @@
 .content {
   @include common();
   min-height: 30px;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 400;
   color:gray;
   cursor: text;
   word-wrap: break-word;
 }
 
+/**
+  -------------------VIDEO AND IMAGE----------------------
+**/
+.imageContainer {
+  position: relative;
+}
+
+.videoContainer {
+  position: relative;
+}
+
+.image {
+  max-width: 100%;
+  min-width: 100%;
+  margin: 20px 0 20px 0;
+  min-height: 100px;
+  max-height: 500px;
+}
+
+.video {
+  max-width: 100%;
+  min-width: 100%;
+  margin: 20px 0 20px 0;
+  min-height: 500px;
+}
+
+
+/**
+  -----------------TOOLBAR------------------------
+**/
+// Toolar styling
 .toolbar {
   width: 100%;
   height: 50px;
@@ -50,19 +85,7 @@
   border-top: 5px solid gray;
 }
 
-.imageContainer {
-  position: relative;
-}
-
-.image {
-  position: relative;
-  max-width: 100%;
-  min-width: 100%;
-  margin: 20px 0 20px 0;
-  min-height: 100px;
-  overflow: hidden;
-}
-
+// Toolbar Icons styling
 .fa {
   padding: 10px;
   color:white;
@@ -84,6 +107,10 @@
   }
 }
 
+
+/**
+  -----------------EXTRAS---------------------
+**/
 //To color the placeholder
 ::-webkit-input-placeholder {
   color:#ABA7AD;

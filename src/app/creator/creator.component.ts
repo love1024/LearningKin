@@ -51,10 +51,18 @@ export class CreatorComponent implements OnInit {
   // Insert new Video Element using renderer2
   insertVideo() {
     const link = window.prompt('Insert link of the video');
-    const el = this._renderer.createElement('video');
-    this._renderer.addClass(el, 'video');
-    this._renderer.setAttribute(el, 'src', link);
-    this._renderer.appendChild(this.content.nativeElement, el);
+
+    const div = this._renderer.createElement('div');
+    this._renderer.addClass(div, 'imageContainer');
+    const video = this.createVideoElement(link);
+    const del = this.createDeleteElement();
+    this._renderer.appendChild(div, del);
+    this._renderer.appendChild(div, video);
+
+    this._renderer.appendChild(this.content.nativeElement, div);
+
+    this.deleteEmptyContent();
+    this.addNextEditableBox();
   }
 
   // Insert next editable box to add more content
@@ -62,7 +70,7 @@ export class CreatorComponent implements OnInit {
     const el1 = this._renderer.createElement('div');
     this._renderer.addClass(el1, 'content');
     this._renderer.setAttribute(el1, 'contentEditable', 'true');
-    //   this._renderer.setAttribute(el1, 'placeholder', 'Add Extra Content...');
+
     this._renderer.appendChild(this.content.nativeElement, el1);
   }
 
@@ -71,7 +79,7 @@ export class CreatorComponent implements OnInit {
     const children = this.content.nativeElement.children;
     for (let i = 2; i < children.length; i++) {
       if (children[i].innerHTML === '' && children[i].tagName !== 'IMG') {
-        this.content.nativeElement.removeChild(children[i]);
+        // this.content.nativeElement.removeChild(children[i]);
       }
     }
   }
@@ -81,7 +89,28 @@ export class CreatorComponent implements OnInit {
     const el = this._renderer.createElement('img');
     this._renderer.addClass(el, 'image');
     this._renderer.setAttribute(el, 'src', link);
+    this._renderer.listen(el, 'error', (e) => {
+      e.srcElement.src = 'http://www.siennachicago.com/Common/images/jquery/galleria/image-not-found.png';
+    });
     return el;
+  }
+
+  // Create Video Element to insert
+  createVideoElement(link: string) {
+    const video = this._renderer.createElement('iframe');
+
+    const id = this.getVideoId(link);
+    if (id === 'error') {
+      alert('Please Add valid link');
+      return;
+    }
+
+    link = 'https://www.youtube.com/embed/' + id;
+    this._renderer.setAttribute(video, 'src', link);
+    this._renderer.setAttribute(video, 'frameborder', '0');
+    this._renderer.addClass(video, 'video');
+
+    return video;
   }
 
   // Create Delete Image
@@ -98,4 +127,17 @@ export class CreatorComponent implements OnInit {
     });
     return el;
   }
+
+  // Get video id from youtbube video link
+  getVideoId(url: string) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+
+    if (match && match[2].length === 11) {
+      return match[2];
+    } else {
+      return 'error';
+    }
+  }
+
 }
