@@ -27,7 +27,6 @@ h2 {
 
 .title {
   @include common();
-  letter-spacing: 3px;
   font-family: 'Oswald', sans-serif;
   font-size: 40px;
   font-weight: 600;
