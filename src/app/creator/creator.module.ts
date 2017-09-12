@@ -6,6 +6,6 @@ import { CreatorComponent } from './creator.component';
   imports: [
     CommonModule
   ],
-  declarations: [CreatorComponent]
+  declarations: []
 })
 export class CreatorModule { }
