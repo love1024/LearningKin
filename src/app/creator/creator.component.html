@@ -13,15 +13,20 @@
 </div>
 <div class="toolbar">
   <a href="javascript:void(0)"
-    (click)="formatText('bold')"><i class="fa fa-bold"
+    (click)="formatText('formatblock','<h2>')">
+      <i class="fa fa-header"
+       aria-hidden="true"></i>
+  </a>
+  <a href="javascript:void(0)"
+    (click)="formatText('bold',null)"><i class="fa fa-bold"
     aria-hidden="true"></i></a>
 
   <a href="javascript:void(0)"
-    (click)="formatText('italic')"><i class="fa fa-italic"
+    (click)="formatText('italic',null)"><i class="fa fa-italic"
     aria-hidden="true"></i></a>
 
   <a href="javascript:void(0)"
-    (click)="formatText('underline')">
+    (click)="formatText('underline',null)">
      <i class="fa fa-underline"
     aria-hidden="true"></i></a>
 

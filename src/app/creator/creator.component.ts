@@ -27,8 +27,8 @@ export class CreatorComponent implements OnInit {
   }
 
   // Format text according to the command
-  formatText(cmd: string) {
-    document.execCommand(cmd, false, null);
+  formatText(cmd: string, view: string) {
+    document.execCommand(cmd, false, view);
   }
 
   // Insert new Image Element using renderer2
