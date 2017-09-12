@@ -3,7 +3,6 @@
   border: 0;
   width:100%;
   overflow: hidden;
-  font-family: 'Montserrat', sans-serif;
   &:focus {
     outline: none;
   }
@@ -29,19 +28,22 @@ h2 {
 .title {
   @include common();
   letter-spacing: 3px;
+  font-family: 'Oswald', sans-serif;
   font-size: 40px;
   font-weight: 600;
   color:#383636;
   height: 45px;
   margin-top: 30px;
   margin-bottom:30px;
+  min-height: 70px;
 }
 
 
 .content {
   @include common();
   min-height: 30px;
-  font-size: 25px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 23px;
   font-weight: 400;
   color:#282525;
   cursor: text;
