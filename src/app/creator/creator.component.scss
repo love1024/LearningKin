@@ -41,9 +41,9 @@ h2 {
 .content {
   @include common();
   min-height: 30px;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 400;
-  color:gray;
+  color:#282525;
   cursor: text;
   word-wrap: break-word;
 }
