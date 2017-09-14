@@ -12,6 +12,7 @@ export class CreatorComponent implements OnInit {
   constructor(private _renderer: Renderer2) { }
 
   ngOnInit() {
+    this.content.nativeElement.children[0].focus();
   }
 
   // Auto grow the title and content div
@@ -36,16 +37,18 @@ export class CreatorComponent implements OnInit {
     const link = window.prompt('Insert link of the image');
 
     const div = this._renderer.createElement('div');
-    this._renderer.addClass(div, 'imageContainer');
+    this._renderer.addClass(div, 'videoContainer');
     const img = this.createImageElement(link);
     const del = this.createDeleteElement();
+
     this._renderer.appendChild(div, del);
     this._renderer.appendChild(div, img);
 
-    this._renderer.appendChild(this.content.nativeElement, div);
+    const cur = document.getSelection().anchorNode;
+    this._renderer.insertBefore(this.content.nativeElement, div, cur.nextSibling);
 
     this.deleteEmptyContent();
-    this.addNextEditableBox();
+    this.addNextEditableBox(cur.nextSibling);
   }
 
   // Insert new Video Element using renderer2
@@ -59,19 +62,21 @@ export class CreatorComponent implements OnInit {
     this._renderer.appendChild(div, del);
     this._renderer.appendChild(div, video);
 
-    this._renderer.appendChild(this.content.nativeElement, div);
+    const cur = document.getSelection().anchorNode;
+    this._renderer.insertBefore(this.content.nativeElement, div, cur.nextSibling);
 
     this.deleteEmptyContent();
-    this.addNextEditableBox();
+    this.addNextEditableBox(cur.nextSibling);
   }
 
   // Insert next editable box to add more content
-  addNextEditableBox() {
-    const el1 = this._renderer.createElement('div');
-    this._renderer.addClass(el1, 'content');
-    this._renderer.setAttribute(el1, 'contentEditable', 'true');
+  addNextEditableBox(el) {
+    const div = this._renderer.createElement('div');
+    this._renderer.addClass(div, 'content');
+    this._renderer.setAttribute(div, 'contentEditable', 'true');
 
-    this._renderer.appendChild(this.content.nativeElement, el1);
+    // this._renderer.appendChild(this.content.nativeElement, div);
+    this._renderer.insertBefore(this.content.nativeElement, div, el.nextSibling);
   }
 
   // To delete not used placeholders
