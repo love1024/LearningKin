@@ -63,7 +63,6 @@ export class CreatorComponent implements OnInit {
     document.execCommand(cmd, false, view);
   }
 
-
   /**
    * Insert new image at the caret position or append the
    * image in the container area if caret is not in valid position
