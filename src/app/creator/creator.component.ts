@@ -109,8 +109,15 @@ export class CreatorComponent implements OnInit {
     this._renderer.appendChild(div, del);
     this._renderer.appendChild(div, video);
 
-    const cur = document.getSelection().anchorNode;
-    this._renderer.insertBefore(this.content.nativeElement, div, cur.nextSibling);
+    const curEl = document.getSelection().anchorNode as HTMLElement;
+
+    if (curEl.classList && (this.content.nativeElement.children.length === 2 ||
+      curEl.classList.contains('container') ||
+      curEl.classList.contains('fakeBox'))) {
+      this._renderer.appendChild(this.content.nativeElement, div);
+    } else {
+      this._renderer.insertBefore(this.content.nativeElement, div, curEl.nextSibling);
+    }
 
     this.addNextEditableBox(div);
   }
