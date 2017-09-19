@@ -141,6 +141,7 @@ export class CreatorComponent implements OnInit {
     const div = this._renderer.createElement('div');
     this._renderer.addClass(div, 'content');
     this._renderer.setAttribute(div, 'contentEditable', 'true');
+    this._renderer.setAttribute(div, 'placeholder', 'This is extra Content...');
 
     // this._renderer.appendChild(this.content.nativeElement, div);
     this._renderer.insertBefore(this.content.nativeElement, div, el.nextSibling);
