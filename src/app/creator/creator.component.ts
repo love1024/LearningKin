@@ -26,10 +26,12 @@ export class CreatorComponent implements OnInit {
   /**
    * Lifecycle hook on intialization of component
    * Used to put focus on the title of the blog
+   * and add eventListener for keydown
    * @memberof CreatorComponent
    */
   ngOnInit() {
     this.content.nativeElement.children[0].focus();
+    document.addEventListener('keydown', this.backspaceListener.bind(this));
   }
 
   /**
@@ -70,6 +72,9 @@ export class CreatorComponent implements OnInit {
    */
   insertImage() {
     const link = window.prompt('Insert link of the image');
+    if (!link) {
+      return;
+    }
 
     // Create the image div with the delete button
     const div = this._renderer.createElement('div');
@@ -101,6 +106,9 @@ export class CreatorComponent implements OnInit {
    */
   insertVideo() {
     const link = window.prompt('Insert link of the video');
+    if (!link) {
+      return;
+    }
 
     const div = this._renderer.createElement('div');
     this._renderer.addClass(div, 'videoContainer');
@@ -136,8 +144,6 @@ export class CreatorComponent implements OnInit {
 
     // this._renderer.appendChild(this.content.nativeElement, div);
     this._renderer.insertBefore(this.content.nativeElement, div, el.nextSibling);
-
-    this.deleteEmptyDiv();
   }
 
   /**
@@ -196,7 +202,6 @@ export class CreatorComponent implements OnInit {
     this._renderer.listen(el, 'click', (e) => {
       const parent = this._renderer.parentNode(e.srcElement);
       this._renderer.removeChild(this.content.nativeElement, parent);
-      this.deleteEmptyDiv();
     });
     return el;
   }
@@ -219,19 +224,39 @@ export class CreatorComponent implements OnInit {
     }
   }
 
-
   /**
-   * Delete any extra consective empty blocks
+   * To listen to backspace and when div is empty
+   * Delete it on furthur backspace
+   * @param {any} key
    * @memberof CreatorComponent
    */
-  deleteEmptyDiv() {
-    const children = this.content.nativeElement.children;
-    for (let i = 2; i < children.length; i++) {
-      if (children[i].innerHTML === '' && children[i - 1].innerHTML === '') {
-        this.content.nativeElement.removeChild(children[i]);
-        i--;
+  backspaceListener(key) {
+    if (key.code === 'Backspace') {
+      const curEl = document.getSelection().anchorNode as HTMLElement;
+      if (curEl.innerHTML === '' && this.canDelete(curEl)) {
+        curEl.remove();
       }
     }
   }
 
+  /**
+   * Check whether we can delete current element or not
+   * @param {any} el - The element to check
+   * @returns
+   * @memberof CreatorComponent
+   */
+  canDelete(el) {
+
+    // Length and children of container
+    const len = this.content.nativeElement.children.length;
+    const children = this.content.nativeElement.children;
+
+    // If length is 2 or it is last child of container we cannot delete
+    if (len === 2 || el === children[len - 1] || el.parent === children[len - 1]) {
+      return false;
+    }
+
+    // Return true if we can delete
+    return true;
+  }
 }
