@@ -1,45 +1,32 @@
 <div class="body">
-  <div #content
-    class="container">
-    <textarea #titleText
-      class="title"
-      placeholder="This is Blog Title..."
-      (input)="autoGrow(titleText)"></textarea>
-    <div class="content"
-      contenteditable="true"
-      placeholder="This is Blog Content..."></div>
+  <div #content class="container">
+    <textarea #titleText class="title" placeholder="This is Blog Title..." (input)="autoGrow(titleText)"></textarea>
+    <div class="content" contenteditable="true" placeholder="This is Blog Content..."></div>
   </div>
   <div class="fakeBox"></div>
 </div>
 <div class="toolbar">
-  <a href="javascript:void(0)"
-    (click)="formatText('insertUnorderedList',null)">
+  <a href="javascript:void(0)" (click)="formatText('insertUnorderedList',null)">
     <i class="fa fa-list-ul"
     aria-hidden="true"></i></a>
-  <a href="javascript:void(0)"
-    (click)="formatText('formatblock','<h2>')">
+  <a href="javascript:void(0)" (click)="formatText('formatblock','<h2>')">
       <i class="fa fa-header"
        aria-hidden="true"></i></a>
-  <a href="javascript:void(0)"
-    (click)="formatText('bold',null)"><i class="fa fa-bold"
+  <a href="javascript:void(0)" (click)="formatText('bold',null)"><i class="fa fa-bold"
     aria-hidden="true"></i></a>
 
-  <a href="javascript:void(0)"
-    (click)="formatText('italic',null)"><i class="fa fa-italic"
+  <a href="javascript:void(0)" (click)="formatText('italic',null)"><i class="fa fa-italic"
     aria-hidden="true"></i></a>
 
-  <a href="javascript:void(0)"
-    (click)="formatText('underline',null)">
+  <a href="javascript:void(0)" (click)="formatText('underline',null)">
      <i class="fa fa-underline"
     aria-hidden="true"></i></a>
 
-  <a href="javascript:void(0)"
-    (click)="insertImage()">
+  <a href="javascript:void(0)" (click)="insertImage()">
   <i class="fa fa-picture-o"
    aria-hidden="true"></i></a>
 
-  <a href="javascript:void(0)"
-    (click)="insertVideo()">
+  <a href="javascript:void(0)" (click)="insertVideo()">
     <i class="fa fa-video-camera"
     aria-hidden="true"></i></a>
 </div>
