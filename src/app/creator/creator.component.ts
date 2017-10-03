@@ -260,4 +260,24 @@ export class CreatorComponent implements OnInit {
     // Return true if we can delete
     return true;
   }
+
+  /**
+   * Insert link to the selected text
+   * @returns
+   * @memberof CreatorComponent
+  */
+  insertLink() {
+    const link = prompt('Enter link');
+    this.formatText('CreateLink', link);
+  }
+
+  /**
+   * Embed code in the content
+   * @returns
+   * @memberof CreatorComponent
+  */
+  insertCode() {
+    const code = prompt('Insert code');
+    this.formatText('insertHTML', code);
+  }
 }

@@ -1,34 +1,66 @@
 <div class="body">
-  <div #content class="container">
-    <textarea #titleText class="title" placeholder="This is Blog Title..." (input)="autoGrow(titleText)"></textarea>
-    <div class="content" contenteditable="true" placeholder="This is Blog Content..."></div>
+  <div #content
+    class="container">
+    <textarea #titleText
+      class="title"
+      placeholder="This is Blog Title..."
+      (input)="autoGrow(titleText)"></textarea>
+    <div class="content"
+      contenteditable="true"
+      placeholder="This is Blog Content..."></div>
   </div>
   <div class="fakeBox"></div>
 </div>
 <div class="toolbar">
-  <a href="javascript:void(0)" (click)="formatText('insertUnorderedList',null)" title="Unordered List" >
+  <a href="javascript:void(0)"
+    (click)="formatText('insertUnorderedList',null)"
+    title="Unordered List">
     <i class="fa fa-list-ul" aria-hidden="true"></i>
   </a>
-  <a href="javascript:void(0)" (click)="formatText('formatblock','<h2>')" title="Header" >
+  <a href="javascript:void(0)"
+    (click)="formatText('formatblock','<h2>')"
+    title="Header">
       <i class="fa fa-header" aria-hidden="true"></i>
   </a>
-  <a href="javascript:void(0)" (click)="formatText('bold',null)" title="Bold" >
+  <a href="javascript:void(0)"
+    (click)="formatText('bold',null)"
+    title="Bold">
     <i class="fa fa-bold" aria-hidden="true"></i>
   </a>
 
-  <a href="javascript:void(0)" (click)="formatText('italic',null)" title="Italic" >
+  <a href="javascript:void(0)"
+    (click)="formatText('italic',null)"
+    title="Italic">
     <i class="fa fa-italic" aria-hidden="true"></i>
   </a>
 
-  <a href="javascript:void(0)" (click)="formatText('underline',null)" title="Underline" >
+  <a href="javascript:void(0)"
+    (click)="formatText('underline',null)"
+    title="Underline">
      <i class="fa fa-underline" aria-hidden="true"></i>
   </a>
 
-  <a href="javascript:void(0)" (click)="insertImage()" title="Insert Image" >
+  <a href="javascript:void(0)"
+    (click)="insertImage()"
+    title="Insert Image">
     <i class="fa fa-picture-o" aria-hidden="true"></i>
   </a>
 
-  <a href="javascript:void(0)" (click)="insertVideo()" title="Insert Video" >
+  <a href="javascript:void(0)"
+    (click)="insertVideo()"
+    title="Insert Video">
     <i class="fa fa-video-camera" aria-hidden="true"></i>
+  </a>
+
+  <a href="javascript:void(0)"
+    (click)="insertCode()"
+    title="Embed code">
+    <i class="fa fa-code" aria-hidden="true"></i>
+  </a>
+
+  <a href="javascript:void(0)"
+    (click)="insertLink()"
+    title="Insert Link">
+    <i class="fa fa-link" aria-hidden="true"></i>
   </a>
 </div>
