@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 
+declare const document: any;
+
 @Component({
   selector: 'app-creator',
   templateUrl: './creator.component.html',
@@ -19,7 +21,27 @@ export class CreatorComponent implements OnInit {
    * To show pop up box
    * @memberof CreatorComponent
    */
-  isPopUpOn = true;
+  isPopUpOn = false;
+
+  /**
+   * To Save selected text or caret postion
+   * while opening pop up box
+   * @memberof CreatorComponent
+   */
+  selections: any;
+
+  /**
+   * To save link inserted in pop up box
+   * @memberof CreatorComponent
+   */
+  link: string;
+
+  /**
+   * Function to call when there link is inserted
+   * in pop up box
+   * @memberof CreatorComponent
+   */
+  popUpCallback: any;
 
   /**
    * Creates an instance of CreatorComponent.
@@ -76,32 +98,34 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
    */
   insertImage() {
-    const link = window.prompt('Insert link of the image');
-    if (!link) {
-      return;
-    }
-
-    // Create the image div with the delete button
-    const div = this._renderer.createElement('div');
-    this._renderer.addClass(div, 'imageContainer');
-    const img = this.createImageElement(link);
-    const del = this.createDeleteElement();
-
-    this._renderer.appendChild(div, del);
-    this._renderer.appendChild(div, img);
-
     // Take the element where current selection is
     const curEl = document.getSelection().anchorNode as HTMLElement;
 
-    if (curEl.classList && (this.content.nativeElement.children.length === 2 ||
-      curEl.classList.contains('container') ||
-      curEl.classList.contains('fakeBox'))) {
-      this._renderer.appendChild(this.content.nativeElement, div);
-    } else {
-      this._renderer.insertBefore(this.content.nativeElement, div, curEl.nextSibling);
-    }
+    this.openPopUp((link: string) => {
+      if (!link) {
+        return;
+      }
 
-    this.addNextEditableBox(div);
+      // Create the image div with the delete button
+      const div = this._renderer.createElement('div');
+      this._renderer.addClass(div, 'imageContainer');
+      const img = this.createImageElement(link);
+      const del = this.createDeleteElement();
+
+      this._renderer.appendChild(div, del);
+      this._renderer.appendChild(div, img);
+
+      if (curEl.classList && (this.content.nativeElement.children.length === 2 ||
+        curEl.classList.contains('container') ||
+        curEl.classList.contains('fakeBox'))) {
+        this._renderer.appendChild(this.content.nativeElement, div);
+      } else {
+        this._renderer.insertBefore(this.content.nativeElement, div, curEl.nextSibling);
+      }
+
+      this.addNextEditableBox(div);
+
+    });
   }
 
   /**
@@ -110,29 +134,31 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
    */
   insertVideo() {
-    const link = window.prompt('Insert link of the video');
-    if (!link) {
-      return;
-    }
-
-    const div = this._renderer.createElement('div');
-    this._renderer.addClass(div, 'videoContainer');
-    const video = this.createVideoElement(link);
-    const del = this.createDeleteElement();
-    this._renderer.appendChild(div, del);
-    this._renderer.appendChild(div, video);
-
     const curEl = document.getSelection().anchorNode as HTMLElement;
+    this.openPopUp((link: string) => {
+      if (!link) {
+        return;
+      }
 
-    if (curEl.classList && (this.content.nativeElement.children.length === 2 ||
-      curEl.classList.contains('container') ||
-      curEl.classList.contains('fakeBox'))) {
-      this._renderer.appendChild(this.content.nativeElement, div);
-    } else {
-      this._renderer.insertBefore(this.content.nativeElement, div, curEl.nextSibling);
-    }
+      const div = this._renderer.createElement('div');
+      this._renderer.addClass(div, 'videoContainer');
+      const video = this.createVideoElement(link);
+      const del = this.createDeleteElement();
+      this._renderer.appendChild(div, del);
+      this._renderer.appendChild(div, video);
 
-    this.addNextEditableBox(div);
+
+
+      if (curEl.classList && (this.content.nativeElement.children.length === 2 ||
+        curEl.classList.contains('container') ||
+        curEl.classList.contains('fakeBox'))) {
+        this._renderer.appendChild(this.content.nativeElement, div);
+      } else {
+        this._renderer.insertBefore(this.content.nativeElement, div, curEl.nextSibling);
+      }
+
+      this.addNextEditableBox(div);
+    });
   }
 
 
@@ -272,9 +298,13 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
   */
   insertLink() {
-    this.openPopUp();
-    // const link = prompt('Enter link');
-    // this.formatText('CreateLink', link);
+    this.selections = this.saveSelection();
+    this.openPopUp((link: string) => {
+      if (!link) {
+        return;
+      }
+      this.formatText('CreateLink', link);
+    });
   }
 
   /**
@@ -287,11 +317,74 @@ export class CreatorComponent implements OnInit {
     this.formatText('insertHTML', code);
   }
 
+  /**
+   * Close the pop up box
+   * @memberof CreatorComponent
+   */
   closePopUp() {
     this.isPopUpOn = false;
+    this.popUpCallback(null);
   }
 
-  openPopUp() {
+  /**
+   * Open the pop up box
+   * @memberof CreatorComponent
+   */
+  openPopUp(callback: any) {
     this.isPopUpOn = true;
+    this.popUpCallback = callback;
+  }
+
+  /**
+   * When There is a link from pop up box
+   * Insert it into the text
+   * @memberof CreatorComponent
+   */
+  onLinkInserted() {
+    this.closePopUp();
+    this.restoreSelection(this.selections);
+    this.popUpCallback(this.link);
+  }
+
+  /**
+   * Save selections or selected text so that
+   * while opening pop up it will not lost
+   * @returns
+   * @memberof CreatorComponent
+   */
+  saveSelection() {
+    if (window.getSelection) {
+      const sel = window.getSelection();
+      if (sel.getRangeAt && sel.rangeCount) {
+        const ranges = [];
+        for (let i = 0, len = sel.rangeCount; i < len; ++i) {
+          ranges.push(sel.getRangeAt(i));
+        }
+        return ranges;
+      }
+    } else if (document.selection && document.selection.createRange) {
+      return document.selection.createRange();
+    }
+    return null;
+  }
+
+  /**
+   * Restore selection from the saved one
+   * And insert it into window selection
+   * @param {any} savedSel
+   * @memberof CreatorComponent
+   */
+  restoreSelection(savedSel) {
+    if (savedSel) {
+      if (window.getSelection) {
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        for (let i = 0, len = savedSel.length; i < len; ++i) {
+          sel.addRange(savedSel[i]);
+        }
+      } else if (document.selection && savedSel.select) {
+        savedSel.select();
+      }
+    }
   }
 }

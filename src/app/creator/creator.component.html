@@ -40,10 +40,10 @@
     (click)="insertVideo()"
     title="Insert Video">
     <i class="fa fa-video-camera" aria-hidden="true"></i></a>
-  <a href="javascript:void(0)"
+  <!-- <a href="javascript:void(0)"
     (click)="insertCode()"
     title="Embed code">
-    <i class="fa fa-code" aria-hidden="true"></i></a>
+    <i class="fa fa-code" aria-hidden="true"></i></a> -->
   <a href="javascript:void(0)"
     (click)="insertLink()"
     title="Insert Link">
@@ -53,10 +53,12 @@
 <div *ngIf="isPopUpOn"
   id="popUp">
   <div id="prompt">
-    <input id="link"
+    <input [(ngModel)]="link"
+      id="link"
       type="text"
       placeholder="Insert Link..." />
-    <i class="fa fa-check"
+    <i (click)="onLinkInserted()"
+      class="fa fa-check"
       aria-hidden="true"></i>
     <i (click)="closePopUp()"
       class="fa fa-close"
