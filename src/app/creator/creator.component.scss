@@ -99,6 +99,7 @@
 .fa {
   padding: 10px;
   color:white;
+  cursor: pointer;
 
   &:hover {
     color:#46B5E5;
@@ -110,12 +111,45 @@
   position: absolute;
   right: 0;
   padding: 0;
-  cursor: pointer;
   &:hover {
     color:red;
   }
 }
 
+/**
+  -----------------POP UP---------------------
+**/
+
+#popUp {
+  align-items: center;
+  background: rgba(235, 232, 232, 0.65);
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+#prompt {
+  background-color: #464141;
+  border-radius: 5px;
+  padding: 5px 0 5px 10px;
+  width: 30%;
+}
+
+#link {
+  background-color: #464141;
+  border: 0;
+  caret-color: white;
+  color: #ffffff;
+  width: 77%;
+
+  &:focus {
+    outline: none;
+  }
+}
 
 /**
   -----------------EXTRAS---------------------
@@ -152,6 +186,14 @@
   .toolbar {
     font-size: 15px;
     height: 40px;
+  }
+
+  #prompt {
+    width: 80%;
+  }
+
+  #link {
+    width: 65%;
   }
 }
 

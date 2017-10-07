@@ -15,6 +15,11 @@ export class CreatorComponent implements OnInit {
    */
   @ViewChild('content') content: ElementRef;
 
+  /**
+   * To show pop up box
+   * @memberof CreatorComponent
+   */
+  isPopUpOn = true;
 
   /**
    * Creates an instance of CreatorComponent.
@@ -267,8 +272,9 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
   */
   insertLink() {
-    const link = prompt('Enter link');
-    this.formatText('CreateLink', link);
+    this.openPopUp();
+    // const link = prompt('Enter link');
+    // this.formatText('CreateLink', link);
   }
 
   /**
@@ -279,5 +285,13 @@ export class CreatorComponent implements OnInit {
   insertCode() {
     const code = prompt('Insert code');
     this.formatText('insertHTML', code);
+  }
+
+  closePopUp() {
+    this.isPopUpOn = false;
+  }
+
+  openPopUp() {
+    this.isPopUpOn = true;
   }
 }

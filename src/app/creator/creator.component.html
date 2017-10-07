@@ -49,3 +49,17 @@
     title="Insert Link">
     <i class="fa fa-link" aria-hidden="true"></i></a>
 </div>
+
+<div *ngIf="isPopUpOn"
+  id="popUp">
+  <div id="prompt">
+    <input id="link"
+      type="text"
+      placeholder="Insert Link..." />
+    <i class="fa fa-check"
+      aria-hidden="true"></i>
+    <i (click)="closePopUp()"
+      class="fa fa-close"
+      aria-hidden="true"></i>
+  </div>
+</div>
