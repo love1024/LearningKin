@@ -115,16 +115,8 @@ export class CreatorComponent implements OnInit {
       this._renderer.appendChild(div, del);
       this._renderer.appendChild(div, img);
 
-      if (curEl.classList && (this.content.nativeElement.children.length === 2 ||
-        curEl.classList.contains('container') ||
-        curEl.classList.contains('fakeBox'))) {
-        this._renderer.appendChild(this.content.nativeElement, div);
-      } else {
-        this._renderer.insertBefore(this.content.nativeElement, div, curEl.nextSibling);
-      }
-
+      this.appendElement(curEl, div);
       this.addNextEditableBox(div);
-
     });
   }
 
@@ -147,16 +139,7 @@ export class CreatorComponent implements OnInit {
       this._renderer.appendChild(div, del);
       this._renderer.appendChild(div, video);
 
-
-
-      if (curEl.classList && (this.content.nativeElement.children.length === 2 ||
-        curEl.classList.contains('container') ||
-        curEl.classList.contains('fakeBox'))) {
-        this._renderer.appendChild(this.content.nativeElement, div);
-      } else {
-        this._renderer.insertBefore(this.content.nativeElement, div, curEl.nextSibling);
-      }
-
+      this.appendElement(curEl, div);
       this.addNextEditableBox(div);
     });
   }
@@ -313,8 +296,21 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
   */
   insertCode() {
-    const code = prompt('Insert code');
-    this.formatText('insertHTML', code);
+    // Take the element where current selection is
+    let curEl = document.getSelection().anchorNode as HTMLElement;
+    if (curEl.parentElement.classList.contains('content')) {
+      curEl = curEl.parentElement;
+    } else if (!curEl.classList.contains('content')) {
+      return;
+    }
+
+    // Toggle codeContainer class
+    if (curEl.classList.contains('codeContainer')) {
+      this._renderer.removeClass(curEl, 'codeContainer');
+    } else {
+      this._renderer.addClass(curEl, 'codeContainer');
+      this.addNextEditableBox(curEl);
+    }
   }
 
   /**
@@ -333,6 +329,16 @@ export class CreatorComponent implements OnInit {
   openPopUp(callback: any) {
     this.isPopUpOn = true;
     this.popUpCallback = callback;
+  }
+
+  appendElement(curEl, div) {
+    if (curEl.classList && (this.content.nativeElement.children.length === 2 ||
+      curEl.classList.contains('container') ||
+      curEl.classList.contains('fakeBox'))) {
+      this._renderer.appendChild(this.content.nativeElement, div);
+    } else {
+      this._renderer.insertBefore(this.content.nativeElement, div, curEl.nextSibling);
+    }
   }
 
   /**
