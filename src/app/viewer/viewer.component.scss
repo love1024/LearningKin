@@ -1,0 +1,121 @@
+@mixin common(){
+  display: block;
+  border: 0;
+  width:100%;
+  overflow: hidden;
+  &:focus {
+    outline: none;
+  }
+}
+
+
+.body {
+  width: 100%;
+}
+
+.container {
+  width: 70%;
+  margin: 0 auto;
+}
+
+/**
+  --------------TITLE AND CONTENT----------------
+**/
+
+.title {
+  @include common();
+  font-family: 'Oswald', sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  color:#383636;
+  height: 45px;
+  margin-top: 30px;
+  margin-bottom:15px;
+  min-height: 70px;
+}
+
+
+.content {
+  @include common();
+  min-height: 30px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 100;
+  line-height:20px;
+  color:#282525;
+  cursor: text;
+  word-wrap: break-word;
+}
+
+.contentContainer {
+  position: relative;
+}
+
+.codeContainer {
+  position: relative;
+  background-color: rgb(248, 246, 246);
+  font-family: monospace;
+  min-height: 100px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 20px 0 20px 0;
+}
+
+/**
+  -------------------VIDEO AND IMAGE----------------------
+**/
+.imageContainer {
+  position: relative;
+}
+
+.videoContainer {
+  position: relative;
+}
+
+.image {
+  max-width: 100%;
+  min-width: 100%;
+  margin: 20px 0 20px 0;
+  min-height: 100px;
+  max-height: 500px;
+}
+
+.video {
+  max-width: 100%;
+  min-width: 100%;
+  margin: 20px 0 20px 0;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+
+
+@media only screen and (max-device-width: 480px) {
+  .title {
+    font-size: 35px;
+  }
+
+  .content {
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .container {
+    width: 90%;
+  }
+
+  .toolbar {
+    font-size: 15px;
+    height: 40px;
+  }
+
+  #prompt {
+    width: 80%;
+  }
+
+  #link {
+    width: 67%;
+  }
+}
+

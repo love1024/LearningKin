@@ -6,17 +6,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CreatorComponent } from './creator/creator.component';
 
+import { HttpService } from './core/http/http.service';
+import { ViewerComponent } from './viewer/viewer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    CreatorComponent
+    CreatorComponent,
+    ViewerComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

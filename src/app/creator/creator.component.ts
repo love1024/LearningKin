@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
+import { HttpService } from '../core/http/http.service';
 
 declare const document: any;
 
@@ -16,6 +17,13 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
    */
   @ViewChild('content') content: ElementRef;
+
+  /**
+   *  Title of the blog
+   * @type {ElementRef}
+   * @memberof CreatorComponent
+   */
+  @ViewChild('titleText') title: ElementRef;
 
   /**
    * To show pop up box
@@ -48,7 +56,10 @@ export class CreatorComponent implements OnInit {
    * @param {Renderer2} _renderer
    * @memberof CreatorComponent
    */
-  constructor(private _renderer: Renderer2) { }
+  constructor(
+    private _renderer: Renderer2,
+    private httpService: HttpService
+  ) { }
 
   /**
    * Lifecycle hook on intialization of component
@@ -392,5 +403,24 @@ export class CreatorComponent implements OnInit {
         savedSel.select();
       }
     }
+  }
+
+  /**
+   * Save file to the server
+   *
+   * @memberof CreatorComponent
+   */
+  save() {
+    let content = (this.content.nativeElement as HTMLElement).outerHTML;
+    const titleText = (this.title.nativeElement as HTMLTextAreaElement).value;
+
+    // Replace everything unnecessary with blank
+    content = content.replace('</textarea>', titleText + '</textarea>');
+    content = content.replace(/textarea/g, 'div');
+    content = content.replace(/contenteditable="true"/g, '');
+    content = content.replace(/<i.*i>/g, '');
+
+    // Call the service to save this data
+    this.httpService.post({ titleText, content });
   }
 }
