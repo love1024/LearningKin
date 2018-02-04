@@ -1,0 +1,19 @@
+<div class="blog-body">
+  <div class="blog-container">
+    <div *ngFor='let blog of blogs'
+      class="blog"
+      (click)="openBlog(blog.id)">
+      <div class="blog-img">
+        <img src="{{blog.img}}" />
+      </div>
+      <div class="blog-info">
+        <div class="blog-title">
+          {{blog.titleText}}
+        </div>
+        <div class="blog-description">
+          {{blog.desp}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

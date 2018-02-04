@@ -26,16 +26,19 @@ export class HttpService {
    * @param {*} data
    * @memberof HttpService
    */
-  public post(data: any): void {
-    this.http.post(this.url, data)
-      .subscribe(
-      res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
-      }
-      );
+  public post(data: any): Observable<any> {
+    return this.http.post(this.url, data);
+  }
+
+  /**
+   *  To store general information about blog
+   *  store it in tile database
+   * @param {*} data
+   * @returns {Observable<any>}
+   * @memberof HttpService
+   */
+  public postTile(data: any): Observable<any> {
+    return this.http.post(this.url + '/tile', data);
   }
 
   /**
@@ -45,5 +48,26 @@ export class HttpService {
    */
   public getAll(): Observable<any> {
     return this.http.get(this.url);
+  }
+
+  /**
+   * Get all tiles of blogs
+   *
+   * @returns {Observable<any>}
+   * @memberof HttpService
+   */
+  public getAllTiles(): Observable<any> {
+    return this.http.get(this.url + '/tiles');
+  }
+
+  /**
+   * Get the blog by id
+   *
+   * @param {string} id
+   * @returns
+   * @memberof HttpService
+   */
+  public getById(id: string): Observable<any> {
+    return this.http.get(this.url + '/' + id);
   }
 }

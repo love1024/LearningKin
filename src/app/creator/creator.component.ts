@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/co
 import { HttpService } from '../core/http/http.service';
 
 declare const document: any;
+const defaultImage = './assets/image-not-found.png';
 
 @Component({
   selector: 'app-creator',
@@ -183,7 +184,7 @@ export class CreatorComponent implements OnInit {
     this._renderer.addClass(el, 'image');
     this._renderer.setAttribute(el, 'src', link);
     this._renderer.listen(el, 'error', (e) => {
-      e.srcElement.src = './assets/image-not-found.png';
+      e.srcElement.src = defaultImage;
     });
     return el;
   }
@@ -411,16 +412,82 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
    */
   save() {
+    const titleText = (this.title.nativeElement as HTMLTextAreaElement).value;
     let content = (this.content.nativeElement as HTMLElement).outerHTML;
+
+    content = this.RemoveExtras(content, titleText);
+
+    // Call the service to save this data
+    this.httpService.post({ titleText, content })
+      .subscribe(
+      res => {
+        console.log(res);
+        this.saveTile(res[0]._id);
+      },
+      err => {
+        console.log(err);
+      }
+      );
+  }
+
+  /**
+   * Save tile to show general information about blog
+   *
+   * @memberof CreatorComponent
+   */
+  saveTile(id: string) {
     const titleText = (this.title.nativeElement as HTMLTextAreaElement).value;
 
-    // Replace everything unnecessary with blank
+    const images = document.getElementsByTagName('img');
+    const img = images.length > 0 ? images[0].src : defaultImage;
+
+    // Get the description from div which is not empty
+    const descriptions = document.getElementsByClassName('content');
+    let desp = '...';
+    for (const desc of descriptions) {
+      if (desc.innerText !== '') {
+        desp = desc.innerText.substr(0, 100);
+        break;
+      }
+    }
+
+    this.httpService.postTile({ id, img, titleText, desp })
+      .subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+      );
+  }
+
+  /**
+   *  Replace everything unnecessary with blank
+   *  such as contenteditable and or remove content
+   *  buttons
+   *
+   * @param {string} content
+   * @memberof CreatorComponent
+   */
+  RemoveExtras(content: string, titleText: string): string {
+
     content = content.replace('</textarea>', titleText + '</textarea>');
     content = content.replace(/textarea/g, 'div');
     content = content.replace(/contenteditable="true"/g, '');
     content = content.replace(/<i.*i>/g, '');
 
-    // Call the service to save this data
-    this.httpService.post({ titleText, content });
+    // Removing empty divs
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = content;
+    const divs = wrapper.getElementsByClassName('content');
+    for (const div of divs) {
+      if (div.innerText === '') {
+        div.remove();
+      }
+    }
+    content = wrapper.innerHTML;
+
+    return content;
   }
 }
