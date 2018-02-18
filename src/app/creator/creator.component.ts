@@ -418,6 +418,7 @@ export class CreatorComponent implements OnInit {
     content = this.RemoveExtras(content, titleText);
 
     // Call the service to save this data
+    debugger;
     this.httpService.post({ titleText, content })
       .subscribe(
       res => {
@@ -471,15 +472,22 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
    */
   RemoveExtras(content: string, titleText: string): string {
-
     content = content.replace('</textarea>', titleText + '</textarea>');
     content = content.replace(/textarea/g, 'div');
     content = content.replace(/contenteditable="true"/g, '');
-    content = content.replace(/<i.*i>/g, '');
+
+    // Removing font awesome close icons
+
 
     // Removing empty divs
     const wrapper = document.createElement('div');
     wrapper.innerHTML = content;
+
+    const icons = wrapper.getElementsByTagName('i');
+    for (const icon of icons) {
+      icon.remove();
+    }
+
     const divs = wrapper.getElementsByClassName('content');
     for (const div of divs) {
       if (div.innerText === '') {
