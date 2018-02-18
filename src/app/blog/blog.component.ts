@@ -55,6 +55,9 @@ export class BlogComponent implements OnInit {
   }
 
   onNavSelection(e) {
+    if (e.target.tagName !== 'DIV') {
+      return;
+    }
     const parent = e.target.parentElement;
     const childs = parent.children;
 
