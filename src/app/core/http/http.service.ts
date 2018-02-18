@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class HttpService {
   /** Url of the server */
-  private url = 'https://abc-node-server.herokuapp.com/';
+  private url = 'http://abc-node-server.herokuapp.com/';
 
   /**
    * Creates an instance of HttpService.
