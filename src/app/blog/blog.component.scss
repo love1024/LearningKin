@@ -6,6 +6,7 @@
 }
 
 .head {
+  position: relative;
   height: 200px;
   width:100%;
   background-color: rgb(11, 130, 199);
@@ -14,7 +15,7 @@
 .logo {
   color:whitesmoke;
   font-size: 60px;
-  position: relative;
+  position: absolute;
   top:20%;
   left:20%;
   font-family: 'EB Garamond', serif;
