@@ -12,7 +12,7 @@
 }
 
 .logo {
-  color:white;
+  color:whitesmoke;
   font-size: 60px;
   position: relative;
   top:20%;
@@ -20,8 +20,13 @@
   font-family: 'EB Garamond', serif;
 }
 
+.logo-text {
+  color:white;
+}
+
 .blog-body {
   width: 100%;
+  background-color:whitesmoke;
 }
 
 .blog-container {
