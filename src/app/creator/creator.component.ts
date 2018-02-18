@@ -477,15 +477,13 @@ export class CreatorComponent implements OnInit {
     content = content.replace(/contenteditable="true"/g, '');
 
     // Removing font awesome close icons
-
-
     // Removing empty divs
     const wrapper = document.createElement('div');
     wrapper.innerHTML = content;
 
     const icons = wrapper.getElementsByTagName('i');
-    for (const icon of icons) {
-      icon.remove();
+    while (icons.length > 0) {
+      icons[0].parentNode.removeChild(icons[0]);
     }
 
     const divs = wrapper.getElementsByClassName('content');
