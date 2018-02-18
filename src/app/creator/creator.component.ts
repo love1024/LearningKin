@@ -418,7 +418,7 @@ export class CreatorComponent implements OnInit {
     content = this.RemoveExtras(content, titleText);
 
     // Call the service to save this data
-    debugger;
+
     this.httpService.post({ titleText, content })
       .subscribe(
       res => {
