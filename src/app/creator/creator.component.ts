@@ -81,12 +81,12 @@ export class CreatorComponent implements OnInit {
    */
   autoGrow(el) {
     if (el.scrollHeight > el.clientHeight) {
-      el.style.height = (el.scrollHeight + 50) + 'px';
+      el.style.minHeight = (el.scrollHeight + 50) + 'px';
     } else {
 
       // Prevent height from growing when deleting lines.
-      el.style.height = '1px';
-      el.style.height = el.scrollHeight + 'px';
+      el.style.minHeight = '1px';
+      el.style.minHeight = el.scrollHeight + 'px';
     }
   }
 
