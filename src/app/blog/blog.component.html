@@ -1,3 +1,12 @@
+<nav class="navbar"
+  (click)="onNavSelection($event)">
+  <div class="selected">
+    <i class="fa fa-clock"></i> Latest
+  </div>
+  <div>
+    <i class="fa fa-book"></i> Data Structure
+  </div>
+</nav>
 <div class="blog-body">
   <div class="blog-container">
     <div *ngFor='let blog of blogs'

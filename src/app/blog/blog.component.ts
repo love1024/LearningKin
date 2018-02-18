@@ -17,6 +17,8 @@ export class BlogComponent implements OnInit {
    */
   public blogs: any;
 
+  private truncatedWords = [];
+
   /**
    * Creates an instance of BlogComponent.
    * @param {HttpService} httpService
@@ -52,4 +54,16 @@ export class BlogComponent implements OnInit {
     this.router.navigate(['/viewer', id]);
   }
 
+  onNavSelection(e) {
+    const parent = e.target.parentElement;
+    const childs = parent.children;
+
+    for (let i = 0; i < childs.length; i++) {
+      if (childs[i].classList.contains('selected')) {
+        childs[i].classList.remove('selected');
+      }
+    }
+
+    e.target.classList.add('selected');
+  }
 }
