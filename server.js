@@ -8,7 +8,7 @@ app.use(compression());
 // in the dist directory
 
 app.get('/', function (req, res) {
-  res.redirect('https://angular-blog-creator.herokuapp.com/index.html');
+  res.redirect('http://learningkin.com/index.html');
 })
 
 app.use(express.static(__dirname + '/dist'));
