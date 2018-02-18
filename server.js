@@ -30,8 +30,9 @@ app.use(express.static(__dirname + '/dist'));
 // Start the app by listening on the default
 // Heroku port
 
+//MONGO DB SERVER REQUESTS
+
 app.get('/', (req, res, next) => {
-  console.log("simple");
   collection.find({}, { limit: 10, sort: [['_id', -1]] })
     .toArray((err, results) => {
       if (err)
@@ -42,7 +43,6 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/db/tiles', (req, res, next) => {
-  console.log('tiles');
   tileCollection.find({}, { limit: 10, sort: [['_id', -1]] })
     .toArray((err, results) => {
       if (err)
@@ -53,7 +53,6 @@ app.get('/db/tiles', (req, res, next) => {
 });
 
 app.get('/db/:id', (req, res, next) => {
-  console.log("id");
   collection.find({ _id: id(req.id) })
     .toArray((err, results) => {
       if (err)
@@ -74,7 +73,6 @@ app.post('/db', (req, res, next) => {
 
 //To store tile of general information about blogs
 app.post('/db/tile', (req, res, next) => {
-  console.log("In tile post");
   tileCollection.insert(req.body, {}, (err, results) => {
     if (err)
       return next(err);
