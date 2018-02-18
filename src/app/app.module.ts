@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { CreatorComponent } from './creator/creator.component';
@@ -34,7 +35,7 @@ import { BlogComponent } from './blog/blog.component';
       }
     ])
   ],
-  providers: [HttpService],
+  providers: [HttpService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

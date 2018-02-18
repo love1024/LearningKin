@@ -7,9 +7,6 @@ app.use(compression());
 // Run the app by serving the static files
 // in the dist directory
 
-app.get('/', function (req, res) {
-  res.redirect('http://learningkin.com/index.html');
-})
 
 app.use(express.static(__dirname + '/dist'));
 // Start the app by listening on the default
