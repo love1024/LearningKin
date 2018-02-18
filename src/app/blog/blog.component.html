@@ -1,32 +1,34 @@
-<div class="head">
-  <div class="logo">
-    <i class="fa fa-braille"></i>
-    <span class="logo-text">Learning Kin</span>
+<div style="width:100%">
+  <div class="head">
+    <div class="logo">
+      <i class="fa fa-braille"></i>
+      <span class="logo-text">Learning Kin</span>
+    </div>
   </div>
-</div>
-<nav class="navbar"
-  (click)="onNavSelection($event)">
-  <div class="selected">
-    <i class="fa fa-clock-o"></i> Latest
-  </div>
-  <div>
-    <i class="fa fa-book"></i> Upcoming
-  </div>
-</nav>
-<div class="blog-body">
-  <div class="blog-container">
-    <div *ngFor='let blog of blogs'
-      class="blog"
-      (click)="openBlog(blog.id)">
-      <div class="blog-img">
-        <img src="{{blog.img}}" />
-      </div>
-      <div class="blog-info">
-        <div class="blog-title">
-          {{blog.titleText}}
+  <nav class="navbar"
+    (click)="onNavSelection($event)">
+    <div class="selected">
+      <i class="fa fa-clock-o"></i> Latest
+    </div>
+    <div>
+      <i class="fa fa-book"></i> Upcoming
+    </div>
+  </nav>
+  <div class="blog-body">
+    <div class="blog-container">
+      <div *ngFor='let blog of blogs'
+        class="blog"
+        (click)="openBlog(blog.id)">
+        <div class="blog-img">
+          <img src="{{blog.img}}" />
         </div>
-        <div class="blog-description">
-          {{blog.desp}}
+        <div class="blog-info">
+          <div class="blog-title">
+            {{blog.titleText}}
+          </div>
+          <div class="blog-description">
+            {{blog.desp}}
+          </div>
         </div>
       </div>
     </div>
