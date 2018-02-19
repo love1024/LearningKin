@@ -129,14 +129,13 @@
 }
 
 /**
-  -----------------POP UP---------------------
+  -----------------POP UP & TOAST---------------------
 **/
 
 #popUp {
   align-items: center;
   background: rgba(235, 232, 232, 0.65);
   display: flex;
-  flex-direction: row;
   height: 100%;
   justify-content: center;
   position: fixed;
@@ -147,20 +146,35 @@
 #prompt {
   background-color: #464141;
   border-radius: 5px;
-  padding: 5px 0 5px 10px;
-  width: 30%;
+  padding: 10px;
+  width: 20%;
+  .fa {
+    padding: 2px;
+  }
 }
 
 #link {
+  display: block;
   background-color: #464141;
   border: 0;
   caret-color: white;
   color: #ffffff;
   width: 77%;
-
+  margin-bottom: 2px;
   &:focus {
     outline: none;
   }
+}
+
+.toast {
+  background: #464141;
+  position: fixed;
+  top: calc(70% - 50px);
+  left: calc(50% - 50px);
+  min-width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px
 }
 
 /**

@@ -32,6 +32,12 @@ export class CreatorComponent implements OnInit {
    */
   isPopUpOn = false;
 
+  /** To show toast message */
+  isToastOn = false;
+
+  /** Toast message  */
+  toastMessage = '';
+
   /**
    * To Save selected text or caret postion
    * while opening pop up box
@@ -343,6 +349,19 @@ export class CreatorComponent implements OnInit {
     this.popUpCallback = callback;
   }
 
+  /**
+   * Open toast with given message and
+   * time before closing
+   * @param {string} message
+   * @param {number} time
+   * @memberof CreatorComponent
+   */
+  openToast(message: string, time: number) {
+    this.toastMessage = message;
+    this.isToastOn = true;
+    setTimeout(() => { this.isToastOn = false; }, time);
+  }
+
   appendElement(curEl, div) {
     if (curEl.classList && (this.content.nativeElement.children.length === 2 ||
       curEl.classList.contains('container') ||
@@ -456,9 +475,11 @@ export class CreatorComponent implements OnInit {
       .subscribe(
       res => {
         console.log(res);
+        this.openToast('Saved', 2000);
       },
       err => {
         console.log(err);
+        this.openToast('Failed', 2000);
       }
       );
   }
