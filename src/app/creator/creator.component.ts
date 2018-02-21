@@ -436,18 +436,19 @@ export class CreatorComponent implements OnInit {
 
     content = this.RemoveExtras(content, titleText);
 
-    // Call the service to save this data
-
-    this.httpService.post({ titleText, content })
-      .subscribe(
-      res => {
-        console.log(res);
-        this.saveTile(res[0]._id);
-      },
-      err => {
-        console.log(err);
-      }
-      );
+    // Take tags and Call the service to save this data
+    this.openPopUp((tags: string) => {
+      this.httpService.post({ titleText, tags, content })
+        .subscribe(
+        res => {
+          console.log(res);
+          this.saveTile(res[0]._id);
+        },
+        err => {
+          console.log(err);
+        }
+        );
+    });
   }
 
   /**
