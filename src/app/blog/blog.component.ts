@@ -17,6 +17,9 @@ export class BlogComponent implements OnInit {
    */
   public blogs: any;
 
+  /** Whether articles are loading or not */
+  public isLoading = true;
+
   private truncatedWords = [];
 
   /**
@@ -37,6 +40,9 @@ export class BlogComponent implements OnInit {
       .subscribe(
       res => {
         this.blogs = res;
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
       },
       err => {
         console.log(err);
