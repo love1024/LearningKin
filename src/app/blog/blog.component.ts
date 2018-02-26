@@ -24,10 +24,10 @@ export class BlogComponent implements OnInit {
   public pageNo = 1;
 
   /** Toast message */
-  toastMessage = 'Not available';
+  toastMessage = '';
 
   /** Is toast on */
-  isToastOn = true;
+  isToastOn = false;
 
 
   /**
