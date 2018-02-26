@@ -20,7 +20,9 @@ export class BlogComponent implements OnInit {
   /** Whether articles are loading or not */
   public isLoading = true;
 
-  private truncatedWords = [];
+  /** Current page no */
+  private pageNo = 1;
+
 
   /**
    * Creates an instance of BlogComponent.
@@ -36,7 +38,7 @@ export class BlogComponent implements OnInit {
    * @memberof BlogComponent
    */
   ngOnInit() {
-    this.httpService.getAllTiles()
+    this.httpService.getAllTiles(1)
       .subscribe(
       res => {
         this.blogs = res;
@@ -60,6 +62,13 @@ export class BlogComponent implements OnInit {
     this.router.navigate(['/viewer', id]);
   }
 
+  /**
+   * Highlight the tab which is selected
+   *
+   * @param {any} e
+   * @returns
+   * @memberof BlogComponent
+   */
   onNavSelection(e) {
     if (e.target.tagName !== 'DIV') {
       return;

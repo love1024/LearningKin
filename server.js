@@ -17,6 +17,11 @@ app.param('id', (req, res, next, id) => {
   return next()
 })
 
+app.param('pageNo', (req, res, next, pageNo) => {
+  req.pageNo = pageNo;
+  return next()
+})
+
 const db = mongoskin.db('mongodb://love1024:Lsvwsan9@ds237868.mlab.com:37868/abc');
 const id = mongoskin.helper.toObjectID
 
@@ -42,8 +47,9 @@ app.get('/', (req, res, next) => {
     );
 });
 
-app.get('/db/tiles', (req, res, next) => {
-  tileCollection.find({}, { limit: 10, sort: [['_id', -1]] })
+let nPerPage = 20;
+app.get('/db/tiles/:pageNo', (req, res, next) => {
+  tileCollection.find().skip((req.pageNo - 1) * nPerPage).limit(nPerPage)
     .toArray((err, results) => {
       if (err)
         return next(err);

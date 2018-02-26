@@ -378,7 +378,7 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
    */
   onLinkInserted() {
-    this.closePopUp();
+    this.isPopUpOn = false;
     this.restoreSelection(this.selections);
     this.popUpCallback(this.link);
   }

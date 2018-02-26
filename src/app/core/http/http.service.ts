@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class HttpService {
   /** Url of the server */
-  private url = '/db';
+  private url = 'http://learningkin.com/db';
 
   /**
    * Creates an instance of HttpService.
@@ -56,8 +56,8 @@ export class HttpService {
    * @returns {Observable<any>}
    * @memberof HttpService
    */
-  public getAllTiles(): Observable<any> {
-    return this.http.get(this.url + '/tiles');
+  public getAllTiles(pageNo: number): Observable<any> {
+    return this.http.get(this.url + '/tiles/' + pageNo);
   }
 
   /**
