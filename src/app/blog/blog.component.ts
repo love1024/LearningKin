@@ -21,7 +21,7 @@ export class BlogComponent implements OnInit {
   public isLoading = true;
 
   /** Current page no */
-  private pageNo = 1;
+  public pageNo = 1;
 
 
   /**
@@ -38,7 +38,24 @@ export class BlogComponent implements OnInit {
    * @memberof BlogComponent
    */
   ngOnInit() {
-    this.httpService.getAllTiles(1)
+    this.getTiles();
+  }
+
+  /** Get next tiles */
+  getMoreTiles() {
+    this.pageNo++;
+    this.getTiles();
+  }
+
+  /** Get previous tiles */
+  getLessTiles() {
+    this.pageNo--;
+    this.getTiles();
+  }
+
+  /** Get tiles from server according to page no */
+  getTiles() {
+    this.httpService.getAllTiles(this.pageNo)
       .subscribe(
       res => {
         this.blogs = res;

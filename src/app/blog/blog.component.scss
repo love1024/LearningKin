@@ -135,7 +135,28 @@
   border-top: 2px solid white;
 }
 
-// Footer
+//**************Page slider******************
+.pageSlider {
+  display: flex;
+  width:80%;
+  margin: 0 auto;
+  font-size: 12px;
+  font-family: "Lucida Console", Monaco, monospace;
+  color:rgb(139, 137, 137);
+  text-transform: uppercase;
+}
+
+.next {
+  cursor: pointer;
+  position: absolute;
+  right: 11% ;
+}
+
+.previous {
+  cursor: pointer;
+}
+
+// ************Footer*************************
 .footer {
   background-color: rgb(11, 130, 199);
   height: 50px;
