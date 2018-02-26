@@ -8,6 +8,7 @@
 .container-box {
   width:100%;
   min-height: 1000px;
+  padding-bottom: 30px;
   background-color: whitesmoke;
 }
 
@@ -51,7 +52,7 @@
   box-sizing: border-box;
   max-width: 100%;
   position: relative;
-  margin-bottom:30px;
+  margin-top:30px;
 }
 
 .blog-img {
@@ -172,6 +173,18 @@
   height: 100%;
   background-color:white;
   padding:20px;
+}
+
+//***************Toast***************************
+.toast {
+  background: #464141;
+  position: fixed;
+  top: calc(70% - 50px);
+  left: calc(50% - 50px);
+  min-width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px
 }
 
 @keyframes placeHolderShimmer{

@@ -23,6 +23,12 @@ export class BlogComponent implements OnInit {
   /** Current page no */
   public pageNo = 1;
 
+  /** Toast message */
+  toastMessage = '';
+
+  /** Is toast on */
+  isToastOn = false;
+
 
   /**
    * Creates an instance of BlogComponent.
@@ -49,6 +55,9 @@ export class BlogComponent implements OnInit {
 
   /** Get previous tiles */
   getLessTiles() {
+    if (this.pageNo === 1) {
+      return;
+    }
     this.pageNo--;
     this.getTiles();
   }
@@ -59,13 +68,24 @@ export class BlogComponent implements OnInit {
     this.httpService.getAllTiles(this.pageNo)
       .subscribe(
       res => {
-        this.blogs = res;
+        if (res.length !== 0) {
+          this.blogs = res;
+        } else {
+          this.pageNo--;
+          this.openToast('More Not Avaiable', 1000);
+        }
         this.isLoading = false;
       },
       err => {
         console.log(err);
       }
       );
+  }
+
+  openToast(message: string, time: number) {
+    this.toastMessage = message;
+    this.isToastOn = true;
+    setTimeout(() => { this.isToastOn = false; }, time);
   }
 
   /**

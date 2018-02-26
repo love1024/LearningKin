@@ -54,16 +54,21 @@
     </div>
   </div>
   <div class="pageSlider">
-    <p class="previous"
+    <div class="previous"
+      *ngIf="pageNo !== 1"
       (click)="getLessTiles()">
       <i class="fa fa-arrow-left"></i> Less
-    </p>
-    <p class="next"
+    </div>
+    <div class="next"
       (click)="getMoreTiles()">More
       <i class="fa fa-arrow-right"></i>
-    </p>
+    </div>
   </div>
 </div>
 <div class="footer">
   © 2018 Learning Kin .
+</div>
+<div *ngIf="isToastOn"
+  class="toast">
+  {{toastMessage}}
 </div>
