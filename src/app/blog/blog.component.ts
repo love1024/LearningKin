@@ -55,13 +55,12 @@ export class BlogComponent implements OnInit {
 
   /** Get tiles from server according to page no */
   getTiles() {
+    this.isLoading = true;
     this.httpService.getAllTiles(this.pageNo)
       .subscribe(
       res => {
         this.blogs = res;
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 1000);
+        this.isLoading = false;
       },
       err => {
         console.log(err);

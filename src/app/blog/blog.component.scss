@@ -149,7 +149,7 @@
 .next {
   cursor: pointer;
   position: absolute;
-  right: 11% ;
+  right: 10% ;
 }
 
 .previous {
@@ -301,7 +301,7 @@
 @media only screen and (max-device-width: 480px) {
   .blog-container {
     width:95%;
-    height: 200px;
+    min-height: 200px;
   }
   
   .blog {
