@@ -455,8 +455,7 @@ export class CreatorComponent implements OnInit {
     const content = (document.getElementsByClassName('container')[0] as HTMLElement).outerHTML;
 
     if (this.id) {
-      console.log(titleText, content);
-      // this.updateBlog(titleText, content, this.id);
+      this.updateBlog(titleText, content, this.id);
     } else {
       // Take tags and Call the service to save this data
       this.openPopUp((tags: string) => {
