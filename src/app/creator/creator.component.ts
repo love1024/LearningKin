@@ -86,6 +86,7 @@ export class CreatorComponent implements OnInit {
       this.httpService.getById(this.id)
         .subscribe(
         res => {
+          res[0].content = res[0].content.replace('</textarea>', res[0].titleText + '</textarea>');
           this.content.nativeElement.outerHTML = res[0].content;
         },
         err => {
@@ -450,11 +451,12 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
    */
   save() {
-    const titleText = (this.title.nativeElement as HTMLTextAreaElement).value;
-    const content = (this.content.nativeElement as HTMLElement).outerHTML;
+    const titleText = (document.getElementsByClassName('title')[0] as HTMLTextAreaElement).value;
+    const content = (document.getElementsByClassName('container')[0] as HTMLElement).outerHTML;
 
     if (this.id) {
-      this.updateBlog(titleText, content, this.id);
+      console.log(titleText, content);
+      // this.updateBlog(titleText, content, this.id);
     } else {
       // Take tags and Call the service to save this data
       this.openPopUp((tags: string) => {
@@ -487,7 +489,7 @@ export class CreatorComponent implements OnInit {
         res => {
           console.log(res);
           if (res.msg === 'success') {
-            this.saveTile(res[0]._id);
+            this.saveTile(this.id);
           } else {
             this.openToast('Failed to update', 2000);
           }
@@ -505,7 +507,7 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
    */
   saveTile(id: string) {
-    const titleText = (this.title.nativeElement as HTMLTextAreaElement).value;
+    const titleText = (document.getElementsByClassName('title')[0] as HTMLTextAreaElement).value;
 
     const images = document.getElementsByTagName('img');
     const img = images.length > 0 ? images[0].src : defaultImage;
