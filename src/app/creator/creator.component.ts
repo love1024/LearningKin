@@ -485,6 +485,7 @@ export class CreatorComponent implements OnInit {
       this.httpService.updateBlog({ titleText, tags, content }, id)
         .subscribe(
         res => {
+          console.log(res);
           if (res[0].msg === 'success') {
             this.saveTile(res[0]._id);
           } else {
@@ -545,6 +546,7 @@ export class CreatorComponent implements OnInit {
     this.httpService.updateTile(data)
       .subscribe(
       res => {
+        console.log(res);
         if (res[0].msg === 'success') {
           this.openToast('Updated', 2000);
         } else {
