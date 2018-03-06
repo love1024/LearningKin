@@ -486,7 +486,7 @@ export class CreatorComponent implements OnInit {
         .subscribe(
         res => {
           console.log(res);
-          if (res[0].msg === 'success') {
+          if (res.msg === 'success') {
             this.saveTile(res[0]._id);
           } else {
             this.openToast('Failed to update', 2000);
@@ -547,7 +547,7 @@ export class CreatorComponent implements OnInit {
       .subscribe(
       res => {
         console.log(res);
-        if (res[0].msg === 'success') {
+        if (res.msg === 'success') {
           this.openToast('Updated', 2000);
         } else {
           this.openToast('Failed to update', 2000);
