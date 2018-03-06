@@ -31,6 +31,18 @@ export class HttpService {
   }
 
   /**
+   * Update blog with the given id
+   *
+   * @param {*} data
+   * @param {string} id
+   * @returns {Observable<any>}
+   * @memberof HttpService
+   */
+  public updateBlog(data: any, id: string): Observable<any> {
+    return this.http.put(this.url + '/' + id, data);
+  }
+
+  /**
    *  To store general information about blog
    *  store it in tile database
    * @param {*} data
@@ -39,6 +51,16 @@ export class HttpService {
    */
   public postTile(data: any): Observable<any> {
     return this.http.post(this.url + '/tile', data);
+  }
+
+  /**
+   * Update the tile with given blog id
+   *
+   * @returns {Observable<any>}
+   * @memberof HttpService
+   */
+  public updateTile(data: any): Observable<any> {
+    return this.http.put(this.url + '/tile/' + data.id, data);
   }
 
   /**
@@ -70,4 +92,6 @@ export class HttpService {
   public getById(id: string): Observable<any> {
     return this.http.get(this.url + '/' + id);
   }
+
+
 }

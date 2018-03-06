@@ -31,6 +31,9 @@ import { BlogComponent } from './blog/blog.component';
         path: 'creator', component: CreatorComponent
       },
       {
+        path: 'creator/:id', component: CreatorComponent
+      },
+      {
         path: 'viewer/:id', component: ViewerComponent
       }
     ])

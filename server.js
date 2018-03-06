@@ -87,4 +87,22 @@ app.post('/db/tile', (req, res, next) => {
 })
 
 
+app.put('/db/:id', (req, res, next) => {
+  collection.update({ _id: id(req.id) },
+    { $set: req.body },
+    { safe: true, multi: false }, (e, result) => {
+      if (e) return next(e)
+      res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error' })
+    })
+})
+
+app.put('/db/tile/:id', (req, res, next) => {
+  tileCollection.update({ id: req.id },
+    { $set: req.body },
+    { safe: true, multi: false }, (e, result) => {
+      if (e) return next(e)
+      res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error' })
+    })
+})
+
 app.listen(process.env.PORT || 8080);

@@ -5,7 +5,7 @@ import { HttpService } from '../core/http/http.service';
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.scss']
+  styleUrls: ['./blog.component.scss', './blog-animation.scss']
 })
 export class BlogComponent implements OnInit {
 
@@ -106,6 +106,8 @@ export class BlogComponent implements OnInit {
    * @memberof BlogComponent
    */
   onNavSelection(e) {
+
+    // Only select tab
     if (e.target.tagName !== 'DIV') {
       return;
     }

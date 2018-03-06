@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2, ElementRef, ViewEncapsulation } from '@angular/core';
 import { HttpService } from '../core/http/http.service';
+import { ActivatedRoute } from '@angular/router';
 
 declare const document: any;
 const defaultImage = './assets/image-not-found.png';
@@ -7,9 +8,13 @@ const defaultImage = './assets/image-not-found.png';
 @Component({
   selector: 'app-creator',
   templateUrl: './creator.component.html',
-  styleUrls: ['./creator.component.scss']
+  styleUrls: ['./creator.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CreatorComponent implements OnInit {
+
+  /** Id of the blog if available for editor  */
+  id: string;
 
   /**
    * Content Container which includes Title
@@ -65,7 +70,8 @@ export class CreatorComponent implements OnInit {
    */
   constructor(
     private _renderer: Renderer2,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private route: ActivatedRoute
   ) { }
 
   /**
@@ -75,6 +81,19 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
    */
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.httpService.getById(this.id)
+        .subscribe(
+        res => {
+          this.content.nativeElement.outerHTML = res[0].content;
+        },
+        err => {
+          console.log(err);
+        }
+        );
+    }
+
     this.content.nativeElement.children[0].focus();
     document.addEventListener('keydown', this.backspaceListener.bind(this));
   }
@@ -432,17 +451,45 @@ export class CreatorComponent implements OnInit {
    */
   save() {
     const titleText = (this.title.nativeElement as HTMLTextAreaElement).value;
-    let content = (this.content.nativeElement as HTMLElement).outerHTML;
+    const content = (this.content.nativeElement as HTMLElement).outerHTML;
 
-    content = this.RemoveExtras(content, titleText);
+    if (this.id) {
+      this.updateBlog(titleText, content, this.id);
+    } else {
+      // Take tags and Call the service to save this data
+      this.openPopUp((tags: string) => {
+        this.httpService.post({ titleText, tags, content })
+          .subscribe(
+          res => {
+            this.saveTile(res[0]._id);
+          },
+          err => {
+            console.log(err);
+          }
+          );
+      });
+    }
 
+  }
+
+  /**
+   *  Update blog with given id and blog
+   *
+   * @param {*} data
+   * @param {string} id
+   * @memberof CreatorComponent
+   */
+  updateBlog(titleText: string, content: string, id: string) {
     // Take tags and Call the service to save this data
     this.openPopUp((tags: string) => {
-      this.httpService.post({ titleText, tags, content })
+      this.httpService.updateBlog({ titleText, tags, content }, id)
         .subscribe(
         res => {
-          console.log(res);
-          this.saveTile(res[0]._id);
+          if (res[0].msg === 'success') {
+            this.saveTile(res[0]._id);
+          } else {
+            this.openToast('Failed to update', 2000);
+          }
         },
         err => {
           console.log(err);
@@ -472,11 +519,37 @@ export class CreatorComponent implements OnInit {
       }
     }
 
-    this.httpService.postTile({ id, img, titleText, desp })
+    if (this.id) {
+      this.updateTile({ id, img, titleText, desp });
+    } else {
+      this.httpService.postTile({ id, img, titleText, desp })
+        .subscribe(
+        res => {
+          this.openToast('Saved', 2000);
+        },
+        err => {
+          console.log(err);
+          this.openToast('Failed', 2000);
+        }
+        );
+    }
+  }
+
+  /**
+   * Update tile with given blog id
+   *
+   * @param {*} data
+   * @memberof CreatorComponent
+   */
+  updateTile(data: any) {
+    this.httpService.updateTile(data)
       .subscribe(
       res => {
-        console.log(res);
-        this.openToast('Saved', 2000);
+        if (res[0].msg === 'success') {
+          this.openToast('Updated', 2000);
+        } else {
+          this.openToast('Failed to update', 2000);
+        }
       },
       err => {
         console.log(err);
