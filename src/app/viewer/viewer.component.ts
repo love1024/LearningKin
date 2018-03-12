@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../core/http/http.service';
 
@@ -18,6 +18,9 @@ export class ViewerComponent implements OnInit {
    */
   @ViewChild('body') body: ElementRef;
 
+  /** Container of all elements */
+  @ViewChild('container') container: ElementRef;
+
 
   /**
    * Creates an instance of ViewerComponent.
@@ -25,7 +28,10 @@ export class ViewerComponent implements OnInit {
    * @param {ActivatedRoute} route
    * @memberof ViewerComponent
    */
-  constructor(private httpService: HttpService, private route: ActivatedRoute) { }
+  constructor(
+    private httpService: HttpService,
+    private route: ActivatedRoute,
+    private renderer: Renderer2) { }
 
   /**
    * Get the id of blog and get that blog from server
@@ -37,7 +43,7 @@ export class ViewerComponent implements OnInit {
     this.httpService.getById(id)
       .subscribe(
       res => {
-        this.body.nativeElement.innerHTML = this.RemoveExtras(res[0].content, res[0].titleText);
+        this.parseData(res[0].data);
       },
       err => {
         console.log(err);
@@ -45,39 +51,76 @@ export class ViewerComponent implements OnInit {
       );
   }
 
-  /**
-   *  Replace everything unnecessary with blank
-   *  such as contenteditable and or remove content
-   *  buttons
-   *
-   * @param {string} content
-   * @memberof CreatorComponent
-   */
-  RemoveExtras(content: string, titleText: string): string {
-    content = content.replace('</textarea>', titleText + '</textarea>');
-    content = content.replace(/textarea/g, 'div');
-    content = content.replace(/contenteditable="true"/g, '');
-
-    // Removing font awesome close icons
-    // Removing empty divs
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = content;
-
-    const icons = wrapper.getElementsByTagName('i');
-    while (icons.length > 0) {
-      icons[0].parentNode.removeChild(icons[0]);
-    }
-
-    const divs = wrapper.getElementsByClassName('content') as any;
-    for (const div of divs) {
-      if (div.innerText === '') {
-        div.remove();
+  private parseData(data: any) {
+    for (let i = 0; i < data.length; i++) {
+      const tagName = data[i].tagName;
+      switch (tagName) {
+        case 'title':
+          this.createTitle(data[i].value);
+          break;
+        case 'text':
+          this.createContent(data[i].html);
+          break;
+        case 'code':
+          this.createCode(data[i].html);
+          break;
+        case 'img':
+          this.createImage(data[i].src);
+          break;
+        case 'video':
+          this.createVideo(data[i].src);
+          break;
+        default:
+          console.log('INVALID TAG');
       }
     }
-    content = wrapper.innerHTML;
-
-    return content;
   }
 
+  private createTitle(value: string) {
+    const div = document.createElement('div');
+    this.renderer.addClass(div, 'title');
+    div.innerText = value;
+    this.renderer.appendChild(this.container.nativeElement, div);
+  }
+
+  private createContent(html: string) {
+    const div = document.createElement('div');
+    this.renderer.addClass(div, 'content');
+    div.innerHTML = html;
+    this.renderer.appendChild(this.container.nativeElement, div);
+  }
+
+  private createCode(html: string) {
+    const div = document.createElement('div');
+    this.renderer.addClass(div, 'content');
+    this.renderer.addClass(div, 'codeContainer');
+    div.innerHTML = html;
+    this.renderer.appendChild(this.container.nativeElement, div);
+  }
+
+  private createImage(src: string) {
+    const div = document.createElement('div');
+    const img = document.createElement('img');
+
+    this.renderer.addClass(div, 'imageContainer');
+    this.renderer.setAttribute(img, 'src', src);
+    this.renderer.addClass(img, 'image');
+    this.renderer.appendChild(div, img);
+
+    this.renderer.appendChild(this.container.nativeElement, div);
+  }
+
+  private createVideo(src: string) {
+    const div = document.createElement('div');
+    const video = document.createElement('iframe');
+
+    this.renderer.addClass(div, 'videoContainer');
+    this.renderer.setAttribute(video, 'src', src);
+    this.renderer.setAttribute(video, 'frameborder', '0');
+    this.renderer.addClass(video, 'video');
+    this.renderer.appendChild(div, video);
+
+    this.renderer.appendChild(this.container.nativeElement, div);
+  }
 
 }

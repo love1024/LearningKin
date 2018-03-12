@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Renderer2, ElementRef, ViewEncapsulation } from '@angular/core';
 import { HttpService } from '../core/http/http.service';
+import { ParserService } from '../core/parser/parser.service';
 import { ActivatedRoute } from '@angular/router';
 
 declare const document: any;
@@ -71,7 +72,8 @@ export class CreatorComponent implements OnInit {
   constructor(
     private _renderer: Renderer2,
     private httpService: HttpService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private parser: ParserService
   ) { }
 
   /**
@@ -86,8 +88,8 @@ export class CreatorComponent implements OnInit {
       this.httpService.getById(this.id)
         .subscribe(
         res => {
-          res[0].content = res[0].content.replace('</textarea>', res[0].titleText + '</textarea>');
-          this.content.nativeElement.outerHTML = res[0].content;
+          this.content.nativeElement.children[1].remove();
+          this.parseData(res[0].data);
         },
         err => {
           console.log(err);
@@ -334,8 +336,14 @@ export class CreatorComponent implements OnInit {
    * @memberof CreatorComponent
   */
   insertCode() {
+
     // Take the element where current selection is
     let curEl = document.getSelection().anchorNode as HTMLElement;
+
+    // If it is internal value some tag
+    if (!curEl.tagName) {
+      curEl = curEl.parentElement;
+    }
     if (curEl.parentElement.classList.contains('content')) {
       curEl = curEl.parentElement;
     } else if (!curEl.classList.contains('content')) {
@@ -454,12 +462,14 @@ export class CreatorComponent implements OnInit {
     const titleText = (document.getElementsByClassName('title')[0] as HTMLTextAreaElement).value;
     const content = (document.getElementsByClassName('container')[0] as HTMLElement).outerHTML;
 
+    const data = this.parser.htmlToJson(titleText, content);
+
     if (this.id) {
-      this.updateBlog(titleText, content, this.id);
+      this.updateBlog(data, this.id);
     } else {
       // Take tags and Call the service to save this data
       this.openPopUp((tags: string) => {
-        this.httpService.post({ titleText, tags, content })
+        this.httpService.post({ tags, data })
           .subscribe(
           res => {
             this.saveTile(res[0]._id);
@@ -480,10 +490,10 @@ export class CreatorComponent implements OnInit {
    * @param {string} id
    * @memberof CreatorComponent
    */
-  updateBlog(titleText: string, content: string, id: string) {
+  updateBlog(data: any, id: string) {
     // Take tags and Call the service to save this data
     this.openPopUp((tags: string) => {
-      this.httpService.updateBlog({ titleText, tags, content }, id)
+      this.httpService.updateBlog({ tags, data }, id)
         .subscribe(
         res => {
           console.log(res);
@@ -516,7 +526,7 @@ export class CreatorComponent implements OnInit {
     let desp = '...';
     for (const desc of descriptions) {
       if (desc.innerText !== '') {
-        desp = desc.innerText.substr(0, 100);
+        desp = desc.innerText.substr(0, 200);
         break;
       }
     }
@@ -561,37 +571,54 @@ export class CreatorComponent implements OnInit {
       );
   }
 
-  /**
-   *  Replace everything unnecessary with blank
-   *  such as contenteditable and or remove content
-   *  buttons
-   *
-   * @param {string} content
-   * @memberof CreatorComponent
-   */
-  RemoveExtras(content: string, titleText: string): string {
-    content = content.replace('</textarea>', titleText + '</textarea>');
-    content = content.replace(/textarea/g, 'div');
-    content = content.replace(/contenteditable="true"/g, '');
+  parseData(data: any) {
+    let div, del, img, video, id;
 
-    // Removing font awesome close icons
-    // Removing empty divs
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = content;
-
-    const icons = wrapper.getElementsByTagName('i');
-    while (icons.length > 0) {
-      icons[0].parentNode.removeChild(icons[0]);
-    }
-
-    const divs = wrapper.getElementsByClassName('content');
-    for (const div of divs) {
-      if (div.innerText === '') {
-        div.remove();
+    for (let i = 0; i < data.length; i++) {
+      const tagName = data[i].tagName;
+      switch (tagName) {
+        case 'title':
+          this.title.nativeElement.value = data[i].value;
+          break;
+        case 'text':
+          div = document.createElement('div');
+          this._renderer.addClass(div, 'content');
+          this._renderer.setAttribute(div, 'contentEditable', 'true');
+          div.innerHTML = data[i].html;
+          this._renderer.appendChild(this.content.nativeElement, div);
+          break;
+        case 'code':
+          div = document.createElement('div');
+          this._renderer.addClass(div, 'content');
+          this._renderer.addClass(div, 'codeContainer');
+          this._renderer.setAttribute(div, 'contentEditable', 'true');
+          div.innerHTML = data[i].html;
+          this._renderer.appendChild(this.content.nativeElement, div);
+          break;
+        case 'img':
+          div = this._renderer.createElement('div');
+          this._renderer.addClass(div, 'imageContainer');
+          img = this.createImageElement(data[i].src);
+          del = this.createDeleteElement();
+          this._renderer.appendChild(div, del);
+          this._renderer.appendChild(div, img);
+          this.appendElement(this.content.nativeElement, div);
+          break;
+        case 'video':
+          div = this._renderer.createElement('div');
+          this._renderer.addClass(div, 'videoContainer');
+          id = data[i].src.split('/').pop();
+          video = this.createVideoElement(id);
+          del = this.createDeleteElement();
+          this._renderer.appendChild(div, del);
+          this._renderer.appendChild(div, video);
+          this.appendElement(this.content.nativeElement, div);
+          break;
+        default:
+          console.log('INVALID TAG');
       }
     }
-    content = wrapper.innerHTML;
-
-    return content;
   }
+
+
 }

@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { CreatorComponent } from './creator/creator.component';
 
 import { HttpService } from './core/http/http.service';
+import { ParserService } from './core/parser/parser.service';
 import { ViewerComponent } from './viewer/viewer.component';
 import { BlogComponent } from './blog/blog.component';
 
@@ -38,7 +39,7 @@ import { BlogComponent } from './blog/blog.component';
       }
     ])
   ],
-  providers: [HttpService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [HttpService, { provide: LocationStrategy, useClass: HashLocationStrategy }, ParserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
