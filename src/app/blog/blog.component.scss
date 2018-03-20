@@ -7,10 +7,12 @@
   }
 
   .head {
-    position: relative;
+    position: fixed;
+    top:0;
     height: 200px;
     width:100%;
     background-color: #31506D;
+    z-index: 1;
   }
 
   .logo {
@@ -34,7 +36,8 @@
     display: flex;
     flex-flow: wrap;
     width: 80%;
-    margin: 10% auto;
+    margin: 50px auto;
+    margin-top: 200px;
     margin-bottom: 0;
   }
 
@@ -109,7 +112,8 @@
 
   //NAVBAR
   .navbar {
-    position: relative;
+    position: absolute;
+    bottom: 0;
     width: 100%;
     display: inline-block;
     background-color: #31506D;
