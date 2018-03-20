@@ -10,6 +10,7 @@
   }
 }
 
+
 app-creator {
   .body {
     width: 100%;
@@ -20,6 +21,10 @@ app-creator {
     margin: 0 auto;
   }
 
+  // .content:first-of-type::first-letter {
+  //   font-size:40px;
+  //   font-weight: 800;
+  // }
 
 
   /**
@@ -44,7 +49,6 @@ app-creator {
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     font-weight: 100;
-    line-height:20px;
     color:#282525;
     cursor: text;
     word-wrap: break-word;

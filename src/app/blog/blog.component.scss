@@ -10,7 +10,7 @@
     position: relative;
     height: 200px;
     width:100%;
-    background-color: rgb(11, 130, 199);
+    background-color: #31506D;
   }
 
   .logo {
@@ -112,7 +112,7 @@
     position: relative;
     width: 100%;
     display: inline-block;
-    background-color: rgb(11, 130, 199);
+    background-color: #31506D;
     font-family: 'Open Sans', sans-serif;
     height: 30px;
     text-align: center;
@@ -139,6 +139,7 @@
     font-family: "Lucida Console", Monaco, monospace;
     color:rgb(139, 137, 137);
     text-transform: uppercase;
+    margin-top: 30px;
   }
 
   .next {
@@ -153,7 +154,7 @@
 
   // ************Footer*************************
   .footer {
-    background-color: rgb(11, 130, 199);
+    background-color: #31506D;
     height: 50px;
     font-size: 14px;
     text-align: center;

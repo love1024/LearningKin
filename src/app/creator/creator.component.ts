@@ -305,7 +305,7 @@ export class CreatorComponent implements OnInit {
     // Length and children of container
     const len = this.content.nativeElement.children.length;
     const children = this.content.nativeElement.children;
-
+    console.log(len, children);
     // If length is 2 or it is last child of container we cannot delete
     if (len === 2 || el === children[len - 1] || el.parent === children[len - 1]) {
       return false;
