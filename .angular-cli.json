@@ -17,7 +17,7 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
-      "serviceWorker": true,
+      "serviceWorker": false,
       "prefix": "",
       "styles": [
         "styles.scss"
