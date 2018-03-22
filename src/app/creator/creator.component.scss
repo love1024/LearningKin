@@ -21,12 +21,6 @@ app-creator {
     margin: 0 auto;
   }
 
-  // .content:first-of-type::first-letter {
-  //   font-size:40px;
-  //   font-weight: 800;
-  // }
-
-
   /**
     --------------TITLE AND CONTENT----------------
   **/
@@ -136,11 +130,10 @@ app-creator {
   }
 
   /**
-    -----------------POP UP & TOAST---------------------
+    -----------------POP UP---------------------
   **/
 
   #popUp {
-    align-items: center;
     background: rgba(235, 232, 232, 0.65);
     display: flex;
     height: 100%;
@@ -148,40 +141,30 @@ app-creator {
     position: fixed;
     top: 0;
     width: 100%;
-  }
 
-  #prompt {
-    background-color: #464141;
-    border-radius: 5px;
-    padding: 10px;
-    width: 20%;
-    .fa {
-      padding: 2px;
+    div {
+      background-color: #464141;
+      padding: 10px;
+      width: 25%;
+      position: fixed;
+      animation: fadeInOut 0.5s forwards;
+      .fa {
+        padding: 2px;
+      }
+
+      input {
+        display: block;
+        background-color: #464141;
+        border: 0;
+        caret-color: white;
+        color: #ffffff;
+        width: 77%;
+        margin-bottom: 2px;
+        &:focus {
+          outline: none;
+        }
+      }
     }
-  }
-
-  #link {
-    display: block;
-    background-color: #464141;
-    border: 0;
-    caret-color: white;
-    color: #ffffff;
-    width: 77%;
-    margin-bottom: 2px;
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .toast {
-    background: #464141;
-    position: fixed;
-    top: calc(70% - 50px);
-    left: calc(50% - 50px);
-    min-width: 100px;
-    text-align: center;
-    border-radius: 5px;
-    padding: 10px
   }
 
   /**
@@ -224,7 +207,7 @@ app-creator {
       height: 40px;
     }
 
-    #prompt {
+    #popUp  div {
       width: 80%;
     }
 

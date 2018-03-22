@@ -14,21 +14,44 @@
     background-color: #31506D;
     z-index: 1;
     transition: height 0.5s;
-  }
+    
+    .logo {
+      color:whitesmoke;
+      font-size: 60px;
+      position: absolute;
+      top:20%;
+      left:20%;
+      font-family: 'EB Garamond', serif;
+      transition: font-size 0.5s;
 
+      span {
+        color:whitesmoke;
+      }
+    }
 
-  .logo {
-    color:whitesmoke;
-    font-size: 60px;
-    position: absolute;
-    top:20%;
-    left:20%;
-    font-family: 'EB Garamond', serif;
-    transition: font-size 0.5s;
-  }
+    nav {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: inline-block;
+      background-color: #31506D;
+      font-family: 'Open Sans', sans-serif;
+      height: 30px;
+      text-align: center;
+      
+      div {
+        display: inline;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        cursor: pointer;
+      }
 
-  .logo-text {
-    color:whitesmoke;
+      .selected {
+        border-top: 2px solid white;
+      }
+    }  
   }
 
   .blog-body {
@@ -113,30 +136,6 @@
     display: none;
   }
 
-  //NAVBAR
-  .navbar {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    display: inline-block;
-    background-color: #31506D;
-    font-family: 'Open Sans', sans-serif;
-    height: 30px;
-    text-align: center;
-    div {
-      display: inline;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  }
-
-  .selected {
-    border-top: 2px solid white;
-  }
-
   //**************Page slider******************
   .pageSlider {
     display: flex;
@@ -147,17 +146,18 @@
     color:rgb(139, 137, 137);
     text-transform: uppercase;
     margin-top: 30px;
+    
+    .next {
+      cursor: pointer;
+      position: absolute;
+      right: 10% ;
+    }
+
+    .previous {
+      cursor: pointer;
+    }
   }
 
-  .next {
-    cursor: pointer;
-    position: absolute;
-    right: 10% ;
-  }
-
-  .previous {
-    cursor: pointer;
-  }
 
   // ************Footer*************************
   .footer {
@@ -176,17 +176,6 @@
     padding:20px;
   }
 
-  //***************Toast***************************
-  .toast {
-    background: #464141;
-    position: fixed;
-    top: calc(70% - 50px);
-    left: calc(50% - 50px);
-    min-width: 100px;
-    text-align: center;
-    padding: 10px;
-    font-family: 'Open Sans', sans-serif;
-  }
 
   // RESPONSIVE SIZES
   @media only screen and (max-device-width: 480px) {

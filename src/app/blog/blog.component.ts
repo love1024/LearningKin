@@ -2,10 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from '../core/http/http.service';
 
+const EXPANDABLE_HEAD_HEIGHT = '150px';
+const HEAD_MIN_HEIGHT = '60px';
+const HEAD_MAX_HEIGHT = '200px';
+const FONT_NORMAL = '60px';
+const FONT_MOBILE = '40px';
+
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.scss', './blog-animation.scss']
+  styleUrls: ['./blog.component.scss', './blog-animation.scss', '../shared/styles/toast.scss']
 })
 export class BlogComponent implements OnInit {
 
@@ -15,7 +21,7 @@ export class BlogComponent implements OnInit {
    * @type {*}
    * @memberof BlogComponent
    */
-  public blogs: any;
+  public blogs: any = [{}, {}];
 
   /** Whether articles are loading or not */
   public isLoading = true;
@@ -72,7 +78,7 @@ export class BlogComponent implements OnInit {
             this.blogs = res;
           } else {
             this.pageNo--;
-            this.openToast('More Not Avaiable', 1000);
+            this.openToast('Not Avaiable', 2000);
           }
           this.isLoading = false;
         },
@@ -132,11 +138,11 @@ export class BlogComponent implements OnInit {
     const st = window.pageYOffset || document.documentElement.scrollTop;
     const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
     if (st > 150) {
-      (document.getElementsByClassName('head')[0] as HTMLElement).style.height = '60px';
+      (document.getElementsByClassName('head')[0] as HTMLElement).style.height = HEAD_MIN_HEIGHT;
       (document.getElementsByClassName('logo')[0] as HTMLElement).style.fontSize = '0';
     } else {
-      (document.getElementsByClassName('head')[0] as HTMLElement).style.height = '200px';
-      (document.getElementsByClassName('logo')[0] as HTMLElement).style.fontSize = width <= 480 ? '40px' : '60px';
+      (document.getElementsByClassName('head')[0] as HTMLElement).style.height = HEAD_MAX_HEIGHT;
+      (document.getElementsByClassName('logo')[0] as HTMLElement).style.fontSize = width <= 480 ? FONT_MOBILE : FONT_NORMAL;
     }
   }
 }

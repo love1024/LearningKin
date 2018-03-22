@@ -9,7 +9,7 @@ const defaultImage = './assets/image-not-found.png';
 @Component({
   selector: 'app-creator',
   templateUrl: './creator.component.html',
-  styleUrls: ['./creator.component.scss'],
+  styleUrls: ['./creator.component.scss', '../shared/styles/toast.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class CreatorComponent implements OnInit {
@@ -87,13 +87,13 @@ export class CreatorComponent implements OnInit {
     if (this.id) {
       this.httpService.getById(this.id)
         .subscribe(
-        res => {
-          this.content.nativeElement.children[1].remove();
-          this.parseData(res[0].data);
-        },
-        err => {
-          console.log(err);
-        }
+          res => {
+            this.content.nativeElement.children[1].remove();
+            this.parseData(res[0].data);
+          },
+          err => {
+            console.log(err);
+          }
         );
     }
 
@@ -469,14 +469,17 @@ export class CreatorComponent implements OnInit {
     } else {
       // Take tags and Call the service to save this data
       this.openPopUp((tags: string) => {
+        if (!tags) {
+          return;
+        }
         this.httpService.post({ tags, data })
           .subscribe(
-          res => {
-            this.saveTile(res[0]._id);
-          },
-          err => {
-            console.log(err);
-          }
+            res => {
+              this.saveTile(res[0]._id);
+            },
+            err => {
+              console.log(err);
+            }
           );
       });
     }
@@ -493,19 +496,22 @@ export class CreatorComponent implements OnInit {
   updateBlog(data: any, id: string) {
     // Take tags and Call the service to save this data
     this.openPopUp((tags: string) => {
+      if (!tags) {
+        return;
+      }
       this.httpService.updateBlog({ tags, data }, id)
         .subscribe(
-        res => {
-          console.log(res);
-          if (res.msg === 'success') {
-            this.saveTile(this.id);
-          } else {
-            this.openToast('Failed to update', 2000);
+          res => {
+            console.log(res);
+            if (res.msg === 'success') {
+              this.saveTile(this.id);
+            } else {
+              this.openToast('Failed to update', 2000);
+            }
+          },
+          err => {
+            console.log(err);
           }
-        },
-        err => {
-          console.log(err);
-        }
         );
     });
   }
@@ -536,13 +542,13 @@ export class CreatorComponent implements OnInit {
     } else {
       this.httpService.postTile({ id, img, titleText, desp })
         .subscribe(
-        res => {
-          this.openToast('Saved', 2000);
-        },
-        err => {
-          console.log(err);
-          this.openToast('Failed', 2000);
-        }
+          res => {
+            this.openToast('Saved', 2000);
+          },
+          err => {
+            console.log(err);
+            this.openToast('Failed', 2000);
+          }
         );
     }
   }
@@ -556,18 +562,18 @@ export class CreatorComponent implements OnInit {
   updateTile(data: any) {
     this.httpService.updateTile(data)
       .subscribe(
-      res => {
-        console.log(res);
-        if (res.msg === 'success') {
-          this.openToast('Updated', 2000);
-        } else {
-          this.openToast('Failed to update', 2000);
+        res => {
+          console.log(res);
+          if (res.msg === 'success') {
+            this.openToast('Updated', 2000);
+          } else {
+            this.openToast('Failed to update', 2000);
+          }
+        },
+        err => {
+          console.log(err);
+          this.openToast('Failed', 2000);
         }
-      },
-      err => {
-        console.log(err);
-        this.openToast('Failed', 2000);
-      }
       );
   }
 

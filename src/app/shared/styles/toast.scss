@@ -1,0 +1,22 @@
+  .toast {
+    background: #464141;
+    position: fixed;
+    top: 70%;
+    left: calc(50% - 50px);
+    min-width: 100px;
+    text-align: center;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    animation: fadeInOut 0.5s;
+  }
+
+  @keyframes fadeInOut {
+    from {
+      opacity: 0;
+      top:100%;
+    }
+    to {
+      opacity: 1;
+      top:70%;
+    }
+  }

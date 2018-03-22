@@ -77,11 +77,10 @@
 
 <div *ngIf="isPopUpOn"
   id="popUp">
-  <div id="prompt">
+  <div>
     <input [(ngModel)]="link"
-      id="link"
       type="text"
-      placeholder="Insert Link..." />
+      placeholder="Insert Here..." />
     <i (click)="onLinkInserted()"
       class="fa fa-check"
       aria-hidden="true"></i>
