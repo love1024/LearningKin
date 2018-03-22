@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from '../core/http/http.service';
 
@@ -13,7 +13,7 @@ const FONT_MOBILE = '40px';
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.scss', './blog-animation.scss', '../shared/styles/toast.scss']
 })
-export class BlogComponent implements OnInit {
+export class BlogComponent implements OnInit, OnDestroy {
 
   /**
    *  All the blogs
@@ -51,6 +51,15 @@ export class BlogComponent implements OnInit {
   ngOnInit() {
     this.getTiles();
     window.addEventListener('scroll', () => { this.onScroll(); });
+  }
+
+  /**
+   * On Destroy to remove event listener
+   *
+   * @memberof BlogComponent
+   */
+  ngOnDestroy() {
+    window.removeEventListener('scroll', () => { });
   }
 
   /** Get next tiles */
@@ -137,6 +146,7 @@ export class BlogComponent implements OnInit {
   onScroll() {
     const st = window.pageYOffset || document.documentElement.scrollTop;
     const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    console.log(width);
     if (st > 150) {
       (document.getElementsByClassName('head')[0] as HTMLElement).style.height = HEAD_MIN_HEIGHT;
       (document.getElementsByClassName('logo')[0] as HTMLElement).style.fontSize = '0';
