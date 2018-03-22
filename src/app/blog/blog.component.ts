@@ -29,7 +29,6 @@ export class BlogComponent implements OnInit {
   /** Is toast on */
   isToastOn = false;
 
-
   /**
    * Creates an instance of BlogComponent.
    * @param {HttpService} httpService
@@ -45,6 +44,7 @@ export class BlogComponent implements OnInit {
    */
   ngOnInit() {
     this.getTiles();
+    window.addEventListener('scroll', () => { this.onScroll(); });
   }
 
   /** Get next tiles */
@@ -67,18 +67,18 @@ export class BlogComponent implements OnInit {
     this.isLoading = true;
     this.httpService.getAllTiles(this.pageNo)
       .subscribe(
-      res => {
-        if (res.length !== 0) {
-          this.blogs = res;
-        } else {
-          this.pageNo--;
-          this.openToast('More Not Avaiable', 1000);
+        res => {
+          if (res.length !== 0) {
+            this.blogs = res;
+          } else {
+            this.pageNo--;
+            this.openToast('More Not Avaiable', 1000);
+          }
+          this.isLoading = false;
+        },
+        err => {
+          console.log(err);
         }
-        this.isLoading = false;
-      },
-      err => {
-        console.log(err);
-      }
       );
   }
 
@@ -121,5 +121,22 @@ export class BlogComponent implements OnInit {
     }
 
     e.target.classList.add('selected');
+  }
+
+  /**
+   * On scroll of page
+   *
+   * @memberof BlogComponent
+   */
+  onScroll() {
+    const st = window.pageYOffset || document.documentElement.scrollTop;
+    const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    if (st > 150) {
+      (document.getElementsByClassName('head')[0] as HTMLElement).style.height = '60px';
+      (document.getElementsByClassName('logo')[0] as HTMLElement).style.fontSize = '0';
+    } else {
+      (document.getElementsByClassName('head')[0] as HTMLElement).style.height = '200px';
+      (document.getElementsByClassName('logo')[0] as HTMLElement).style.fontSize = width <= 480 ? '40px' : '60px';
+    }
   }
 }
