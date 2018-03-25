@@ -4,14 +4,22 @@
       <i class="fa fa-braille"></i>
       <span>Learning Kin</span>
     </div>
-    <nav (click)="onNavSelection($event)">
-      <div class="selected">
-        <i class="fa fa-clock-o"></i> Latest
+    <nav [ngClass]="{nav:!isMobile,sidebar:isMobile}"
+      (click)="onNavSelection($event)">
+      <div *ngFor="let opt of navOptions"
+        class="{{opt.name=='Latest'?'selected':''}}">
+        <i class="fa {{opt.class}}"></i> {{opt.name}}
       </div>
-      <div>
-        <i class="fa fa-book"></i> Upcoming
-      </div>
+      <span (click)="toggleNav()"
+        *ngIf="isMobile">
+        <i class="fa fa-times"></i>
+      </span>
     </nav>
+    <div *ngIf="isMobile"
+      (click)="toggleNav()"
+      class="nav-open">
+      <i class="fa fa-bars"></i>
+    </div>
   </div>
 
   <div class="blog-body">
@@ -32,6 +40,7 @@
             {{blog.desp}}
           </div>
         </div>
+
         <div *ngIf="isLoading"
           class="wrapper">
           <div class="animated-background">

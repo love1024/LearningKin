@@ -468,14 +468,15 @@ export class CreatorComponent implements OnInit {
       this.updateBlog(data, this.id);
     } else {
       // Take tags and Call the service to save this data
-      this.openPopUp((tags: string) => {
-        if (!tags) {
+      this.openPopUp((tag: string) => {
+        if (!tag) {
           return;
         }
-        this.httpService.post({ tags, data })
+
+        this.httpService.post({ data })
           .subscribe(
             res => {
-              this.saveTile(res[0]._id);
+              this.saveTile(tag, res[0]._id);
             },
             err => {
               console.log(err);
@@ -495,16 +496,16 @@ export class CreatorComponent implements OnInit {
    */
   updateBlog(data: any, id: string) {
     // Take tags and Call the service to save this data
-    this.openPopUp((tags: string) => {
-      if (!tags) {
+    this.openPopUp((tag: string) => {
+      if (!tag) {
         return;
       }
-      this.httpService.updateBlog({ tags, data }, id)
+      this.httpService.updateBlog({ data }, id)
         .subscribe(
           res => {
             console.log(res);
             if (res.msg === 'success') {
-              this.saveTile(this.id);
+              this.saveTile(tag, this.id);
             } else {
               this.openToast('Failed to update', 2000);
             }
@@ -521,7 +522,7 @@ export class CreatorComponent implements OnInit {
    *
    * @memberof CreatorComponent
    */
-  saveTile(id: string) {
+  saveTile(tag: string, id: string) {
     const titleText = (document.getElementsByClassName('title')[0] as HTMLTextAreaElement).value;
 
     const images = document.getElementsByTagName('img');
@@ -538,9 +539,9 @@ export class CreatorComponent implements OnInit {
     }
 
     if (this.id) {
-      this.updateTile({ id, img, titleText, desp });
+      this.updateTile({ id, img, titleText, desp, tag });
     } else {
-      this.httpService.postTile({ id, img, titleText, desp })
+      this.httpService.postTile({ id, img, titleText, desp, tag })
         .subscribe(
           res => {
             this.openToast('Saved', 2000);

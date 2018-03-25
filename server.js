@@ -49,7 +49,8 @@ app.get('/', (req, res, next) => {
 
 let nPerPage = 20;
 app.get('/db/tiles/:pageNo', (req, res, next) => {
-  tileCollection.find().skip((req.pageNo - 1) * nPerPage).limit(nPerPage)
+  let query = req.query.tag ? { tag: req.query.tag } : {};
+  tileCollection.find(query).skip((req.pageNo - 1) * nPerPage).limit(nPerPage)
     .toArray((err, results) => {
       if (err)
         return next(err);
@@ -57,6 +58,8 @@ app.get('/db/tiles/:pageNo', (req, res, next) => {
     }
     );
 });
+
+
 
 app.get('/db/:id', (req, res, next) => {
   collection.find({ _id: id(req.id) })
