@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class HttpService {
   /** Url of the server */
-  private url = 'http://localhost:8080/db';
+  private url = 'http://learningkin.com/db';
 
   /**
    * Creates an instance of HttpService.
