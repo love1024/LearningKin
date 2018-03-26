@@ -39,14 +39,15 @@ app-creator {
 
   .content {
     @include common();
+    font-family: 'Oswald', sans-serif;
     min-height: 30px;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 100;
     color:#282525;
     cursor: text;
     word-wrap: break-word;
-    word-spacing: 5px;
-    line-height: 1.2em;
+    word-spacing: 3px;
+    line-height: 1.5em;
   }
 
   .contentContainer {
