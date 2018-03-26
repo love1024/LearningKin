@@ -30,11 +30,9 @@ app-viewer {
     font-weight: 600;
     color:#383636;
     margin-top: 30px;
-    margin-bottom:17px;
+    margin-bottom:15px;
     min-height: 70px;
     height: auto;
-    word-spacing: 3px;
-    line-height: 1.5em;
   }
 
 
@@ -42,12 +40,13 @@ app-viewer {
     @include common();
     min-height: 30px;
     font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 100;
-    line-height:20px;
     color:#282525;
     cursor: text;
     word-wrap: break-word;
+    word-spacing: 3px;
+    line-height: 1.5em;
   }
 
   .contentContainer {
