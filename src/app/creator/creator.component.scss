@@ -71,6 +71,7 @@ app-creator {
   **/
   .imageContainer {
     position: relative;
+    text-align: center;
   }
 
   .videoContainer {
@@ -125,6 +126,17 @@ app-creator {
     color:black;
     position: absolute;
     right: 0;
+    top: 0;
+    padding: 0;
+    &:hover {
+      color:red;
+    }
+  }
+
+  .fa-arrows-alt {
+    color:black;
+    position: absolute;
+    right: 25px;
     top: 0;
     padding: 0;
     &:hover {

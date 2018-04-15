@@ -151,8 +151,9 @@ export class CreatorComponent implements OnInit {
       this._renderer.addClass(div, 'imageContainer');
       const img = this.createImageElement(link);
       const del = this.createDeleteElement();
-
+      const resize = this.createResizeElement();
       this._renderer.appendChild(div, del);
+      this._renderer.appendChild(div, resize);
       this._renderer.appendChild(div, img);
 
       this.appendElement(curEl, div);
@@ -257,6 +258,29 @@ export class CreatorComponent implements OnInit {
     this._renderer.listen(el, 'click', (e) => {
       const parent = this._renderer.parentNode(e.srcElement);
       this._renderer.removeChild(this.content.nativeElement, parent);
+    });
+    return el;
+  }
+
+  /**
+   * To resize the image to its original size
+   * and to full size
+   * @memberof CreatorComponent
+   */
+  createResizeElement() {
+    const el = this._renderer.createElement('i');
+    this._renderer.addClass(el, 'fa');
+    this._renderer.addClass(el, 'fa-arrows-alt');
+    this._renderer.setAttribute(el, 'aria-hidden', 'true');
+
+    // Resize image on click
+    this._renderer.listen(el, 'click', (e) => {
+      const img = this._renderer.nextSibling(e.srcElement)
+      if (img.classList.contains('image')) {
+        this._renderer.removeClass(img, 'image');
+      } else {
+        this._renderer.addClass(img, 'image');
+      }
     });
     return el;
   }
@@ -579,7 +603,7 @@ export class CreatorComponent implements OnInit {
   }
 
   parseData(data: any) {
-    let div, del, img, video, id;
+    let div, del, img, video, id, resize;
 
     for (let i = 0; i < data.length; i++) {
       const tagName = data[i].tagName;
@@ -607,7 +631,9 @@ export class CreatorComponent implements OnInit {
           this._renderer.addClass(div, 'imageContainer');
           img = this.createImageElement(data[i].src);
           del = this.createDeleteElement();
+          resize = this.createResizeElement();
           this._renderer.appendChild(div, del);
+          this._renderer.appendChild(div, resize);
           this._renderer.appendChild(div, img);
           this.appendElement(this.content.nativeElement, div);
           break;
