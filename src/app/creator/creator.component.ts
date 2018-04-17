@@ -149,7 +149,7 @@ export class CreatorComponent implements OnInit {
       // Create the image div with the delete button
       const div = this._renderer.createElement('div');
       this._renderer.addClass(div, 'imageContainer');
-      const img = this.createImageElement(link);
+      const img = this.createImageElement(link, false);
       const del = this.createDeleteElement();
       const resize = this.createResizeElement();
       this._renderer.appendChild(div, del);
@@ -210,7 +210,9 @@ export class CreatorComponent implements OnInit {
    */
   createImageElement(link: string, original: boolean) {
     const el = this._renderer.createElement('img');
-    this._renderer.addClass(el, 'image');
+    if (!original) {
+      this._renderer.addClass(el, 'image');
+    }
     this._renderer.setAttribute(el, 'src', link);
     this._renderer.listen(el, 'error', (e) => {
       e.srcElement.src = defaultImage;

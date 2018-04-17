@@ -45,7 +45,7 @@ export class ParserService {
     return {
       tagName: 'img',
       src: imgURL,
-      original: resizeClass
+      original: !resizeClass
     };
   }
 
