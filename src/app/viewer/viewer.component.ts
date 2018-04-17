@@ -42,12 +42,12 @@ export class ViewerComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.httpService.getById(id)
       .subscribe(
-      res => {
-        this.parseData(res[0].data);
-      },
-      err => {
-        console.log(err);
-      }
+        res => {
+          this.parseData(res[0].data);
+        },
+        err => {
+          console.log(err);
+        }
       );
   }
 
@@ -65,7 +65,7 @@ export class ViewerComponent implements OnInit {
           this.createCode(data[i].html);
           break;
         case 'img':
-          this.createImage(data[i].src);
+          this.createImage(data[i].src, data[i].original);
           break;
         case 'video':
           this.createVideo(data[i].src);
@@ -98,13 +98,16 @@ export class ViewerComponent implements OnInit {
     this.renderer.appendChild(this.container.nativeElement, div);
   }
 
-  private createImage(src: string) {
+  private createImage(src: string, original: boolean) {
     const div = document.createElement('div');
     const img = document.createElement('img');
 
     this.renderer.addClass(div, 'imageContainer');
     this.renderer.setAttribute(img, 'src', src);
-    this.renderer.addClass(img, 'image');
+
+    if (!original) {
+      this.renderer.addClass(img, 'image');
+    }
     this.renderer.appendChild(div, img);
 
     this.renderer.appendChild(this.container.nativeElement, div);

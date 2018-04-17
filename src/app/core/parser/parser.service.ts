@@ -42,9 +42,11 @@ export class ParserService {
 
   private createImage(node: HTMLElement) {
     const imgURL = node.getElementsByTagName('img')[0].src;
+    const resizeClass = node.getElementsByTagName('img')[0].classList.contains('image');
     return {
       tagName: 'img',
-      src: imgURL
+      src: imgURL,
+      original: resizeClass
     };
   }
 
