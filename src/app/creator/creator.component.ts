@@ -208,7 +208,7 @@ export class CreatorComponent implements OnInit {
    * @returns
    * @memberof CreatorComponent
    */
-  createImageElement(link: string) {
+  createImageElement(link: string, original: boolean) {
     const el = this._renderer.createElement('img');
     this._renderer.addClass(el, 'image');
     this._renderer.setAttribute(el, 'src', link);
@@ -629,7 +629,7 @@ export class CreatorComponent implements OnInit {
         case 'img':
           div = this._renderer.createElement('div');
           this._renderer.addClass(div, 'imageContainer');
-          img = this.createImageElement(data[i].src);
+          img = this.createImageElement(data[i].src, data[i].original);
           del = this.createDeleteElement();
           resize = this.createResizeElement();
           this._renderer.appendChild(div, del);
