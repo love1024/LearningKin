@@ -105,7 +105,7 @@ export class ViewerComponent implements OnInit {
     this.renderer.addClass(div, 'imageContainer');
     this.renderer.setAttribute(img, 'src', src);
 
-    if (!original) {
+    if (original) {
       this.renderer.addClass(img, 'image');
     }
     this.renderer.appendChild(div, img);

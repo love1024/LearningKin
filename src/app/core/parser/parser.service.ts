@@ -22,7 +22,6 @@ export class ParserService {
         data.push(this.createVideo(childrens[i] as HTMLElement));
       }
     }
-
     return data;
   }
 
